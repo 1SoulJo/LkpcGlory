@@ -19,7 +19,7 @@ android {
     defaultConfig {
         def versionMajor = 1
         def versionMinor = 1
-        def versionPatch = 4
+        def versionPatch = 5
 
         applicationId "com.lkpc.android.app.lightchurch"
         minSdkVersion 24
@@ -90,7 +90,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'org.jsoup:jsoup:1.13.1'
-    implementation 'com.google.android.exoplayer:exoplayer:2.12.1'
+    implementation 'com.google.android.exoplayer:exoplayer:2.14.2'
 
     implementation 'com.github.kenglxn.QRGen:android:2.6.0'
 
