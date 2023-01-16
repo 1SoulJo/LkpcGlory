@@ -40,7 +40,7 @@ class WebUrls {
         const val EVENT_API_BASE = "http://calendar.lkpc.org/"
 
         // pdf base
-        const val PDF_BASE = "https://docs.google.com/gview?url=http://main.lkpc.org/assets/board/files/%s&embedded=true"
+        const val PDF_BASE = "https://docs.google.com/gview?url=http://lkpc.org/assets/board/files/%s&embedded=true"
 
         // img asset prefix
         const val IMG_ASSET = "$LKPC_BASE_URL/assets/images/%s"
