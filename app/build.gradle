@@ -34,11 +34,13 @@ android {
     buildTypes {
         def YOUTUBE_API = "YOUTUBE_API"
         def QR_PASS = "QR_PASS"
+        def BULLETIN_SINGLE_ITEM_OPEN = "BULLETIN_SINGLE_ITEM_OPEN"
         def CONFIG = { k -> "\"${project.properties.get(k)}\"" }
 
         debug {
             buildConfigField "String", YOUTUBE_API, CONFIG("youtube.api")
             buildConfigField "String", QR_PASS, CONFIG("qr.password")
+            buildConfigField "boolean", BULLETIN_SINGLE_ITEM_OPEN, project.properties.get("bulletin.singleItemOpen")
         }
 
         release {
@@ -47,6 +49,7 @@ android {
 
             buildConfigField "String", YOUTUBE_API, CONFIG("youtube.api")
             buildConfigField "String", QR_PASS, CONFIG("qr.password")
+            buildConfigField "boolean", BULLETIN_SINGLE_ITEM_OPEN, project.properties.get("bulletin.singleItemOpen")
         }
     }
     compileOptions {

@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.lkpc.android.app.glory.BuildConfig
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.constants.WebUrls
 import com.lkpc.android.app.glory.ui.basic_webview.BasicWebviewActivity
@@ -60,8 +61,15 @@ class HomeFragment : Fragment() {
         }
         grid_center_layout_4.setOnClickListener {
             // Bulletin
-            val i = Intent(requireContext(), BulletinActivity::class.java)
-            startActivity(i)
+            if (BuildConfig.BULLETIN_SINGLE_ITEM_OPEN) {
+                val i = Intent(requireContext(), BasicWebviewActivity::class.java)
+                i.putExtra("title", R.string.bulletin_kr)
+                i.putExtra("url", WebUrls.RECENT_BULLETIN)
+                startActivity(i)
+            } else {
+                val i = Intent(requireContext(), BulletinActivity::class.java)
+                startActivity(i)
+            }
         }
         grid_center_layout_5.setOnClickListener {
             // Worship pre-registration

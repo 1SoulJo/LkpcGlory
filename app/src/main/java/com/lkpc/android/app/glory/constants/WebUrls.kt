@@ -50,5 +50,8 @@ class WebUrls {
 
         // file asset prefix
         const val FILE_ASSET = "$LKPC_BASE_URL/assets/board/files/%s"
+
+        // single bulletin item
+        const val RECENT_BULLETIN = "https://docs.google.com/viewerng/viewer?url=https://lkpc.org/book/bulletin&embedded=true"
     }
 }
