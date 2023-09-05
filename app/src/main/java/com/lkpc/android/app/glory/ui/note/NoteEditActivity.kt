@@ -2,48 +2,54 @@ package com.lkpc.android.app.glory.ui.note
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.data.NoteDatabase
+import com.lkpc.android.app.glory.databinding.ActivityNoteEditBinding
 import com.lkpc.android.app.glory.entity.Note
-import kotlinx.android.synthetic.main.action_bar.*
-import kotlinx.android.synthetic.main.activity_note_edit.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.*
 
 class NoteEditActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityNoteEditBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_edit)
+        binding = ActivityNoteEditBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar!!.setDisplayShowCustomEnabled(true)
         supportActionBar!!.setCustomView(R.layout.action_bar)
 
         // title
-        ab_title.text = getString(R.string.my_notes)
+        findViewById<TextView>(R.id.ab_title).text = getString(R.string.my_notes)
 
         // content
-        note_title.setText(intent.getStringExtra("title"))
-        note_content.setText(intent.getStringExtra("content"))
+        binding.noteTitle.setText(intent.getStringExtra("title"))
+        binding.noteContent.setText(intent.getStringExtra("content"))
 
         // back button
-        ab_btn_back.visibility = View.VISIBLE
-        ab_btn_back.setOnClickListener {
+        val backBtn: ImageView = findViewById(R.id.ab_btn_back)
+        backBtn.visibility = View.VISIBLE
+        backBtn.setOnClickListener {
             setResult(-1)
             finish()
         }
 
         // save button
+        val saveBtn: TextView = findViewById(R.id.ab_btn_save)
         val id = intent.getIntExtra("id", -1)
-        ab_btn_save.visibility = View.VISIBLE
-        ab_btn_save.setOnClickListener {
+        saveBtn.visibility = View.VISIBLE
+        saveBtn.setOnClickListener {
             GlobalScope.launch {
                 val note = Note(
                     type = intent.getStringExtra("type"),
                     contentId = intent.getStringExtra("contentId"),
-                    title = note_title.text.toString(),
-                    content = note_content.text.toString(),
+                    title = binding.noteTitle.text.toString(),
+                    content = binding.noteContent.text.toString(),
                     lastModified = Date().time
                 )
                 if (id > -1) {

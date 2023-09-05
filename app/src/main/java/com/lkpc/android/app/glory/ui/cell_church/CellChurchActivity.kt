@@ -2,40 +2,50 @@ package com.lkpc.android.app.glory.ui.cell_church
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lkpc.android.app.glory.R
+import com.lkpc.android.app.glory.databinding.ActivityCellChurchBinding
 import com.lkpc.android.app.glory.entity.BaseContent
-import kotlinx.android.synthetic.main.action_bar.*
-import kotlinx.android.synthetic.main.activity_cell_church.*
 
 
 class CellChurchActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCellChurchBinding
+
+    private var actionBarTitle: TextView? = null
+    private var actionBarBackBtn: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityCellChurchBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_cell_church)
-        supportActionBar!!.setDisplayShowCustomEnabled(true)
-        supportActionBar!!.setCustomView(R.layout.action_bar)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setCustomView(R.layout.action_bar)
 
-        ab_title.text = getString(R.string.cell_church)
+        actionBarTitle = supportActionBar?.customView?.findViewById(R.id.ab_title)
+        actionBarBackBtn = supportActionBar?.customView?.findViewById(R.id.ab_btn_back)
 
-        ab_btn_back.visibility = View.VISIBLE
-        ab_btn_back.setOnClickListener {
+        actionBarTitle?.text = getString(R.string.cell_church)
+
+        actionBarBackBtn?.visibility = View.VISIBLE
+        actionBarBackBtn?.setOnClickListener {
             finish()
         }
 
-        rv_cell_church.layoutManager = LinearLayoutManager(this)
-        rv_cell_church.adapter = CellChurchAdapter()
+        binding.rvCellChurch.layoutManager = LinearLayoutManager(this)
+        binding.rvCellChurch.adapter = CellChurchAdapter()
 
         // data observation
         val viewModel : CellChurchViewModel by viewModels()
 
         val observer = Observer<List<BaseContent?>> { data ->
-            if (rv_cell_church != null) {
-                val adapter = rv_cell_church.adapter as CellChurchAdapter
+            if (binding.rvCellChurch != null) {
+                val adapter = binding.rvCellChurch.adapter as CellChurchAdapter
                 if (adapter.isLoading) {
                     (adapter.cellChurchListItems as MutableList<BaseContent?>)
                         .removeAt(adapter.cellChurchListItems.size - 1)
@@ -48,21 +58,21 @@ class CellChurchActivity : AppCompatActivity() {
         viewModel.getData().observe(this, observer)
 
         // setup refresh
-        cell_church_layout.setOnRefreshListener {
+        binding.cellChurchLayout.setOnRefreshListener {
             viewModel.addData(0)
-            cell_church_layout.isRefreshing = false
+            binding.cellChurchLayout.isRefreshing = false
         }
 
         // scroll listener
-        rv_cell_church.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.rvCellChurch.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val adapter = rv_cell_church.adapter as CellChurchAdapter
-                if (!rv_cell_church.canScrollVertically(1) && !adapter.isLoading) {
+                val adapter = binding.rvCellChurch.adapter as CellChurchAdapter
+                if (!binding.rvCellChurch.canScrollVertically(1) && !adapter.isLoading) {
                     (adapter.cellChurchListItems as MutableList).add(null)
                     adapter.notifyItemInserted(adapter.cellChurchListItems.size - 1)
-                    rv_cell_church.scrollToPosition(adapter.cellChurchListItems.size - 1)
+                    binding.rvCellChurch.scrollToPosition(adapter.cellChurchListItems.size - 1)
 
                     viewModel.addData(adapter.itemCount - 1)
 

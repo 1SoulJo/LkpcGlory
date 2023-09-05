@@ -13,7 +13,6 @@ import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.data.NoteDatabase
 import com.lkpc.android.app.glory.entity.BaseContent
 import com.lkpc.android.app.glory.ui.detail.DetailActivity
-import kotlinx.android.synthetic.main.list_item_column.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,9 +25,9 @@ class ColumnAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var columns: List<BaseContent?> = mutableListOf()
 
     class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        var tvColumnTitle: TextView = view.column_title
-        var tvColumnDate: TextView = view.column_date
-        var ivNote: ImageView = view.column_note
+        var tvColumnTitle: TextView = view.findViewById(R.id.column_title)
+        var tvColumnDate: TextView = view.findViewById(R.id.column_date)
+        var ivNote: ImageView = view.findViewById(R.id.column_note)
     }
 
     class LoadingViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -57,23 +56,22 @@ class ColumnAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             val db = NoteDatabase.getDatabase(context = holder.itemView.context)
             db.noteDao().loadByContentId(column.id!!).observe(
-                holder.itemView.context as LifecycleOwner,
-                { note ->
-                    val i = Intent(holder.itemView.context, DetailActivity::class.java)
-                    i.putExtra("data", Gson().toJson(columns[position]))
+                holder.itemView.context as LifecycleOwner
+            ) { note ->
+                val i = Intent(holder.itemView.context, DetailActivity::class.java)
+                i.putExtra("data", Gson().toJson(columns[position]))
 
-                    if (note != null) {
-                        holder.ivNote.visibility = View.VISIBLE
-                        i.putExtra("noteId", note.id)
-                    } else {
-                        holder.ivNote.visibility = View.GONE
-                    }
-
-                    holder.itemView.setOnClickListener {
-                        holder.itemView.context.startActivity(i)
-                    }
+                if (note != null) {
+                    holder.ivNote.visibility = View.VISIBLE
+                    i.putExtra("noteId", note.id)
+                } else {
+                    holder.ivNote.visibility = View.GONE
                 }
-            )
+
+                holder.itemView.setOnClickListener {
+                    holder.itemView.context.startActivity(i)
+                }
+            }
         }
     }
 

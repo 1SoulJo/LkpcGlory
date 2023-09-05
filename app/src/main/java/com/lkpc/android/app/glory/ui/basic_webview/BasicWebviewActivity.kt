@@ -2,12 +2,13 @@ package com.lkpc.android.app.glory.ui.basic_webview
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.api_client.ContentApiClient
+import com.lkpc.android.app.glory.databinding.ActivityBasicWebviewBinding
 import com.lkpc.android.app.glory.entity.BaseContent
-import kotlinx.android.synthetic.main.action_bar.*
-import kotlinx.android.synthetic.main.activity_basic_webview.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,7 +29,7 @@ class BasicWebviewActivity : AppCompatActivity() {
                 val list = response.body() as List<BaseContent>
                 var htmlData = list[0].boardContent!!
                 htmlData = htmlData.replace('↵', 0.toChar())
-                webview.loadDataWithBaseURL(null, htmlData, "text/html", "utf-8", null);
+                binding.webview.loadDataWithBaseURL(null, htmlData, "text/html", "utf-8", null);
             }
         }
 
@@ -37,34 +38,41 @@ class BasicWebviewActivity : AppCompatActivity() {
         }
     }
 
+    private lateinit var binding: ActivityBasicWebviewBinding
+    private var actionBarTitle: TextView? = null
+    private var actionBarBackBtn: ImageView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_basic_webview)
-        supportActionBar!!.setDisplayShowCustomEnabled(true)
-        supportActionBar!!.setCustomView(R.layout.action_bar)
+        binding = ActivityBasicWebviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+        supportActionBar?.setCustomView(R.layout.action_bar)
+        actionBarTitle = supportActionBar?.customView?.findViewById(R.id.ab_title)
+        actionBarBackBtn = supportActionBar?.customView?.findViewById(R.id.ab_btn_back)
 
         // title
         if (intent.getStringExtra("strTitle") != null) {
-            ab_title.text = intent.getStringExtra("strTitle")
+            actionBarTitle?.text = intent.getStringExtra("strTitle")
         } else {
-            ab_title.setText(intent.getIntExtra("title", R.string.lpc))
+            actionBarTitle?.setText(intent.getIntExtra("title", R.string.lpc))
         }
 
         // back button
-        ab_btn_back.visibility = View.VISIBLE
-        ab_btn_back.setOnClickListener { finish() }
+        actionBarBackBtn?.visibility = View.VISIBLE
+        actionBarBackBtn?.setOnClickListener { finish() }
 
         // web view setting
-        webview.settings.javaScriptEnabled = true
-        webview.settings.domStorageEnabled = true
-        webview.settings.builtInZoomControls = true
-        webview.settings.displayZoomControls = false
+        binding.webview.settings.javaScriptEnabled = true
+        binding.webview.settings.domStorageEnabled = true
+        binding.webview.settings.builtInZoomControls = true
+        binding.webview.settings.displayZoomControls = false
 
         // type
         when(intent.getIntExtra("type", 0)) {
             TYPE_URL -> {
                 val url = intent.getStringExtra("url")!!
-                webview.loadUrl(url)
+                binding.webview.loadUrl(url)
             }
 
             TYPE_SERVICE_INFO -> {
@@ -81,11 +89,11 @@ class BasicWebviewActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        webview.onResume()
+        binding.webview.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        webview.onPause()
+        binding.webview.onPause()
     }
 }

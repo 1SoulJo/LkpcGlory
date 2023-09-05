@@ -83,8 +83,8 @@ class LpcMessagingService : FirebaseMessagingService() {
                             val bitmap = BitmapFactory.decodeStream(res.body()!!.byteStream())
                             builder.setLargeIcon(bitmap)
                                 .setStyle(NotificationCompat.BigPictureStyle()
-                                .bigPicture(bitmap)
-                                .bigLargeIcon(null))
+                                .bigPicture(bitmap))
+//                                .bigLargeIcon(null))
                             notificationManager.notify(notificationId, builder.build())
                         }
                     }

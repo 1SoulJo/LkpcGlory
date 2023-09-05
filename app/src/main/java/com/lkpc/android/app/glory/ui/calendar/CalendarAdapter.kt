@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.entity.Event
-import kotlinx.android.synthetic.main.list_item_cal.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,10 +15,10 @@ class CalendarAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var items : List<Event> = mutableListOf()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title : TextView = view.title
-        val desc : TextView = view.description
-        val startTime : TextView = view.start_time
-        val endTime : TextView = view.end_time
+        val title : TextView = view.findViewById(R.id.title)
+        val desc : TextView = view.findViewById(R.id.description)
+        val startTime : TextView = view.findViewById(R.id.start_time)
+        val endTime : TextView = view.findViewById(R.id.end_time)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

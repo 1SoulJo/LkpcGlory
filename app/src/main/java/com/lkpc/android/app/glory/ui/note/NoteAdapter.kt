@@ -14,7 +14,6 @@ import androidx.transition.TransitionManager
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.constants.ContentType
 import com.lkpc.android.app.glory.entity.Note
-import kotlinx.android.synthetic.main.list_item_note.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,11 +26,11 @@ class NoteAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private lateinit var itemSelectListener : OnItemSelectListener
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        var layout: ConstraintLayout = view.note_list_item_layout
-        var checkBox: CheckBox = view.note_checkbox
-        var icon: ImageView = view.note_icon
-        var title: TextView = view.note_title
-        var lastModified: TextView = view.last_modified
+        var layout: ConstraintLayout = view.findViewById(R.id.note_list_item_layout)
+        var checkBox: CheckBox = view.findViewById(R.id.note_checkbox)
+        var icon: ImageView = view.findViewById(R.id.note_icon)
+        var title: TextView = view.findViewById(R.id.note_title)
+        var lastModified: TextView = view.findViewById(R.id.last_modified)
 
         fun setCheckBoxVisibility(visible: Boolean) {
             TransitionManager.beginDelayedTransition(layout, Fade(Fade.IN))

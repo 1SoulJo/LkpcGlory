@@ -22,9 +22,9 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/banner"
-            android:tint="#7000"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#7000" />
 
         <TextView
             android:id="@+id/channel1_name"
@@ -55,9 +55,9 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/banner"
-            android:tint="#7000"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#7000" />
 
         <TextView
             android:id="@+id/channel2_name"
@@ -88,9 +88,9 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/banner"
-            android:tint="#7000"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#7000" />
 
         <TextView
             android:id="@+id/channel3_name"
@@ -121,9 +121,9 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/banner"
-            android:tint="#7000"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#7000" />
 
         <TextView
             android:id="@+id/channel4_name"
@@ -154,9 +154,9 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/banner"
-            android:tint="#7000"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#7000" />
 
         <TextView
             android:id="@+id/channel5_name"

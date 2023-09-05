@@ -14,52 +14,59 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.lkpc.android.app.glory.BuildConfig
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.constants.WebUrls
+import com.lkpc.android.app.glory.databinding.FragmentHomeBinding
 import com.lkpc.android.app.glory.ui.basic_webview.BasicWebviewActivity
 import com.lkpc.android.app.glory.ui.bulletin.BulletinActivity
 import com.lkpc.android.app.glory.ui.yt_channels.YoutubeChannelActivity
-import kotlinx.android.synthetic.main.fragment_home.*
 
 
 class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // setup view pager
         val viewModel: HomeViewModel by viewModels()
         viewModel.init(this)
-        viewModel.getData().observe(requireActivity(), { ads ->
+        viewModel.getData().observe(requireActivity()) { ads ->
             viewModel.adapter.setData(ads.toMutableList())
-        })
-        home_view_pager.adapter = viewModel.adapter
-        home_view_pager.autoScroll(3000)
-        TabLayoutMediator(tab_layout, home_view_pager) { _, _ ->
-            tab_layout.bringToFront()
-        }.attach()
+            binding.homeViewPager.adapter = viewModel.adapter
+            binding.homeViewPager.autoScroll(3000)
+
+            TabLayoutMediator(binding.tabLayout, binding.homeViewPager) { _, _ ->
+                binding.tabLayout.bringToFront()
+            }.attach()
+        }
 
         // setup grids
-        grid_center_layout_1.setOnClickListener {
+        binding.gridCenterLayout1.setOnClickListener {
             // LPC Live
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(WebUrls.LKPC_LIVE_VIDEO)))
         }
-        grid_center_layout_2.setOnClickListener {
+        binding.gridCenterLayout2.setOnClickListener {
             startActivity(Intent(requireContext(), YoutubeChannelActivity::class.java))
         }
-        grid_center_layout_3.setOnClickListener {
+        binding.gridCenterLayout3.setOnClickListener {
             // Newcomer registration
             val i = Intent(requireContext(), BasicWebviewActivity::class.java)
             i.putExtra("title", R.string.newcomer_reg_kr)
             i.putExtra("url", WebUrls.NEWCOMER_REG)
             startActivity(i)
         }
-        grid_center_layout_4.setOnClickListener {
+        binding.gridCenterLayout4.setOnClickListener {
             // Bulletin
             if (BuildConfig.BULLETIN_SINGLE_ITEM_OPEN) {
                 val i = Intent(requireContext(), BasicWebviewActivity::class.java)
@@ -71,14 +78,14 @@ class HomeFragment : Fragment() {
                 startActivity(i)
             }
         }
-        grid_center_layout_5.setOnClickListener {
+        binding.gridCenterLayout5.setOnClickListener {
             // Worship pre-registration
             val i = Intent(requireContext(), BasicWebviewActivity::class.java)
             i.putExtra("title", R.string.worship_pre_reg_kr)
             i.putExtra("url", WebUrls.VISIT_REG)
             startActivity(i)
         }
-        grid_center_layout_6.setOnClickListener {
+        binding.gridCenterLayout6.setOnClickListener {
             // Online offering
             val i = Intent(requireContext(), BasicWebviewActivity::class.java)
             i.putExtra("title", R.string.online_offering_kr)

@@ -11,22 +11,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.entity.Location
-import kotlinx.android.synthetic.main.list_item_nav_guide.view.*
 
 
 class LocationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var _locations: MutableList<Location> = mutableListOf()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var name: TextView = view.name
-        var address: TextView = view.address
-        var tel: TextView = view.tel
-        var fax: TextView = view.fax
-        var email: TextView = view.email
-        var note: TextView = view.note
-        var time: TextView = view.time
-        var img: ImageView = view.img_map
-        var btnMap : LinearLayout = view.map_btn_layout
+        var name: TextView = view.findViewById(R.id.name)
+        var address: TextView = view.findViewById(R.id.address)
+        var tel: TextView = view.findViewById(R.id.tel)
+        var fax: TextView = view.findViewById(R.id.fax)
+        var email: TextView = view.findViewById(R.id.email)
+        var note: TextView = view.findViewById(R.id.note)
+        var time: TextView = view.findViewById(R.id.time)
+        var img: ImageView = view.findViewById(R.id.img_map)
+        var btnMap : LinearLayout = view.findViewById(R.id.map_btn_layout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

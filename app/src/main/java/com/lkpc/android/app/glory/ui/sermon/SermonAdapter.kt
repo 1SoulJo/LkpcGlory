@@ -18,7 +18,6 @@ import com.lkpc.android.app.glory.api_client.YoutubeImgClient
 import com.lkpc.android.app.glory.data.NoteDatabase
 import com.lkpc.android.app.glory.entity.BaseContent
 import com.lkpc.android.app.glory.ui.detail.DetailActivity
-import kotlinx.android.synthetic.main.list_item_sermon.view.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,11 +36,11 @@ class SermonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
         var clLayout: ConstraintLayout = view as ConstraintLayout
-        var clTextArea: ConstraintLayout = view.sermon_text_area
-        var tvSermonTitle: TextView = view.sermon_title
-        var tvSermonName: TextView = view.sermon_name
-        var tvSermonDate: TextView = view.sermon_date
-        var ivNote: ImageView = view.sermon_note
+        var clTextArea: ConstraintLayout = view.findViewById(R.id.sermon_text_area)
+        var tvSermonTitle: TextView = view.findViewById(R.id.sermon_title)
+        var tvSermonName: TextView = view.findViewById(R.id.sermon_name)
+        var tvSermonDate: TextView = view.findViewById(R.id.sermon_date)
+        var ivNote: ImageView = view.findViewById(R.id.sermon_note)
     }
 
     class LoadingViewHolder(view: View): RecyclerView.ViewHolder(view) {}

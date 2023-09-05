@@ -15,7 +15,6 @@ import com.lkpc.android.app.glory.data.NoteDatabase
 import com.lkpc.android.app.glory.entity.BaseContent
 import com.lkpc.android.app.glory.ui.basic_webview.BasicWebviewActivity
 import com.lkpc.android.app.glory.ui.detail.DetailActivity
-import kotlinx.android.synthetic.main.list_item_meditation.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,9 +27,9 @@ class MeditationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var meditations: List<BaseContent?> = mutableListOf()
 
     class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        var title: TextView = view.meditation_title
-        var date: TextView = view.meditation_date
-        var note: ImageView = view.meditation_note
+        var title: TextView = view.findViewById(R.id.meditation_title)
+        var date: TextView = view.findViewById(R.id.meditation_date)
+        var note: ImageView = view.findViewById(R.id.meditation_note)
     }
 
     class LoadingViewHolder(view: View): RecyclerView.ViewHolder(view) {
