@@ -7,11 +7,6 @@
         android:id="@+id/draw_menu_group_1"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_menu_qr_code"
-            android:icon="@drawable/qr_code"
-            android:title="@string/qr_code"
-            android:checkable="false" />
-        <item
             android:id="@+id/nav_menu_my_note"
             android:icon="@drawable/ic_note_list"
             android:title="@string/my_notes"

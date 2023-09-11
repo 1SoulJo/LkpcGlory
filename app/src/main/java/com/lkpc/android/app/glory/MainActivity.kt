@@ -183,7 +183,7 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.navigation_home, R.id.navigation_column, R.id.navigation_sermon,
             R.id.navigation_meditation, R.id.navigation_fellow_news,
-            R.id.nav_menu_qr_code, R.id.nav_menu_my_note, R.id.nav_menu_online_meet,
+            R.id.nav_menu_my_note, R.id.nav_menu_online_meet,
             R.id.nav_menu_church_events, R.id.nav_menu_service_info,
             R.id.nav_menu_nav_guide), binding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -192,10 +192,6 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
 
             when (item.itemId) {
-                R.id.nav_menu_qr_code -> {
-                    startActivity(Intent(this, QrCodeGeneratorActivity::class.java))
-                    true
-                }
                 R.id.nav_menu_my_note -> {
                     startActivity(Intent(this, NoteListActivity::class.java))
                     true
