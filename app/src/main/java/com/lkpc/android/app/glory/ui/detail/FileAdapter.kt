@@ -9,12 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.constants.WebUrls.Companion.FILE_ASSET
-import kotlinx.android.synthetic.main.list_item_file.view.*
 
 class FileAdapter(private val files : List<String>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        var title: TextView = view.file_title
+        var title: TextView = view.findViewById(R.id.file_title)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkpc.android.app.glory.R
-import kotlinx.android.synthetic.main.calendar_fragment.*
+import com.lkpc.android.app.glory.databinding.CalendarFragmentBinding
 
 class CalendarFragment : Fragment() {
 
@@ -16,12 +16,17 @@ class CalendarFragment : Fragment() {
         fun newInstance() = CalendarFragment()
     }
 
+    private var _binding: CalendarFragmentBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
+
     private lateinit var viewModel: CalendarViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = CalendarFragmentBinding.inflate(inflater, container, false)
         return inflater.inflate(R.layout.calendar_fragment, container, false)
     }
 
@@ -29,8 +34,8 @@ class CalendarFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(CalendarViewModel::class.java)
 
-        rv_calendar.layoutManager = LinearLayoutManager(requireContext())
-        rv_calendar.adapter = viewModel.adapter
+        binding.rvCalendar.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvCalendar.adapter = viewModel.adapter
     }
 
 }

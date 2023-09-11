@@ -9,18 +9,20 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.common.AudioAttributes
+import androidx.media3.common.C
+import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
+import androidx.media3.ui.PlayerControlView
+//import androidx.media3.ui.PlayerNotificationManager
+import androidx.media3.ui.PlayerNotificationManager.BitmapCallback
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.audio.AudioAttributes
-import com.google.android.exoplayer2.ui.PlayerControlView
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import com.google.android.exoplayer2.ui.PlayerNotificationManager.BitmapCallback
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
@@ -32,13 +34,12 @@ import com.lkpc.android.app.glory.constants.ContentType
 import com.lkpc.android.app.glory.constants.Notification.Companion.CHANNEL_ID
 import com.lkpc.android.app.glory.constants.Notification.Companion.SERMON_AUDIO_ID
 import com.lkpc.android.app.glory.constants.WebUrls.Companion.SERMON_AUDIO_SRC
+import com.lkpc.android.app.glory.databinding.ActivityDetailBinding
 import com.lkpc.android.app.glory.entity.BaseContent
 import com.lkpc.android.app.glory.ui.note.NoteDetailActivity
 import com.lkpc.android.app.glory.ui.note.NoteEditActivity
-import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.tool_bar.*
 import org.jsoup.Jsoup
-import org.jsoup.safety.Whitelist
+import org.jsoup.safety.Safelist
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,17 +49,21 @@ import java.util.*
 
 class DetailActivity : AppCompatActivity() {
     private val _editNodeActivityResultCode = 1
-    private lateinit var playerNotificationManager: PlayerNotificationManager
+//    private lateinit var playerNotificationManager: PlayerNotificationManager
 
     private var noteId : Int = -1
     private lateinit var content : BaseContent
 
+    private lateinit var binding: ActivityDetailBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        binding = ActivityDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         noteId = intent.getIntExtra("noteId", -1)
 
@@ -99,16 +104,18 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        detail_youtube_fragment.onPause()
+        supportFragmentManager.findFragmentById(R.id.detail_youtube_fragment)?.onPause()
     }
 
+    @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     override fun onDestroy() {
         super.onDestroy()
 
-        if (detail_audio.player != null) {
-            playerNotificationManager.setPlayer(null)
-            detail_audio.player!!.release()
-            detail_audio.player = null
+        val detailAudio = binding.detailAudio
+        if (detailAudio.player != null) {
+//            playerNotificationManager.setPlayer(null)
+            detailAudio.player?.release()
+            detailAudio.player = null
         }
     }
 
@@ -169,7 +176,7 @@ class DetailActivity : AppCompatActivity() {
             R.id.detail_menu_share -> {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, "${content.title} \n ${content_body.text}")
+                    putExtra(Intent.EXTRA_TEXT, "${content.title} \n ${binding.contentBody.text}")
                     type = "text/plain"
                 }
 
@@ -181,29 +188,31 @@ class DetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     private fun fillContent(content: BaseContent) {
         // title
-        toolbar_title.text = content.title
+        val tbTitle = findViewById<TextView>(R.id.toolbar_title)
+        tbTitle?.text = content.title
 
         // file area
-        if (content.files!!.isNotEmpty()) {
-            rv_files.layoutManager = LinearLayoutManager(this)
-            rv_files.adapter = FileAdapter(content.files!!)
+        if (content.files?.isNotEmpty() == true) {
+            binding.rvFiles.layoutManager = LinearLayoutManager(this)
+            binding.rvFiles.adapter = FileAdapter(content.files!!)
         }
 
         // content title
-        content_title.text = content.title
+        binding.contentTitle.text = content.title
 
         // chapter
         if (content.category == ContentType.SERMON) {
-            content_chapter.visibility = View.VISIBLE
-            content_chapter.text = content.chapter
+            binding.contentChapter.visibility = View.VISIBLE
+            binding.contentChapter.text = content.chapter
         }
 
         // date
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.CANADA)
         val newFormat = SimpleDateFormat("yyyy년 MM월 dd일", Locale.CANADA)
-        content_date.text = newFormat.format(dateFormat.parse(content.dateCreated!!)!!)
+        binding.contentDate.text = newFormat.format(dateFormat.parse(content.dateCreated!!)!!)
 
         // setup youtube video is available
         if (content.videoLink != null) {
@@ -212,72 +221,74 @@ class DetailActivity : AppCompatActivity() {
 
         // setup audio if available
         if (content.audioLink != null) {
-            playerNotificationManager = PlayerNotificationManager(
-                this, CHANNEL_ID, SERMON_AUDIO_ID,
-                DescriptionAdapter(getString(R.string.title_sermon), content.title!!))
+//            playerNotificationManager = PlayerNotificationManager(
+//                this, CHANNEL_ID, SERMON_AUDIO_ID,
+//                DescriptionAdapter(getString(R.string.title_sermon), content.title!!))
 
-            val audioPlayer = SimpleExoPlayer.Builder(this).build()
+//            val audioPlayer = SimpleExoPlayer.Builder(this).build()
+            val audioPlayer = ExoPlayer.Builder(this).build()
             val url = SERMON_AUDIO_SRC.format(content.audioLink)
             val mediaItem: MediaItem = MediaItem.fromUri(Uri.parse(url))
             audioPlayer.setMediaItem(mediaItem)
             audioPlayer.prepare()
-            audioPlayer.addListener(object : Player.EventListener {
-                override fun onIsPlayingChanged(isPlaying: Boolean) {
-                    super.onIsPlayingChanged(isPlaying)
-                    if (isPlaying) {
-                        playerNotificationManager.setPlayer(audioPlayer)
-                    }
-                }
-            })
+//            audioPlayer.addListener(object : Player.EventListener {
+//                override fun onIsPlayingChanged(isPlaying: Boolean) {
+//                    super.onIsPlayingChanged(isPlaying)
+//                    if (isPlaying) {
+//                        playerNotificationManager.setPlayer(audioPlayer)
+//                    }
+//                }
+//            })
 
             val audioAttributes: AudioAttributes = AudioAttributes.Builder()
                 .setUsage(C.USAGE_MEDIA)
-                .setContentType(C.CONTENT_TYPE_MUSIC)
+                .setContentType(C.AUDIO_CONTENT_TYPE_SPEECH)
                 .build()
             audioPlayer.setAudioAttributes(audioAttributes, true)
 
-            detail_audio.showTimeoutMs = -1
-            detail_audio.player = audioPlayer
+            binding.detailAudio.showTimeoutMs = -1
+            binding.detailAudio.player = audioPlayer
 
-            btn_audio.visibility = View.VISIBLE
+            binding.btnAudio.visibility = View.VISIBLE
         }
 
         // remove video and audio file
-        val whitelist = Whitelist()
-        whitelist.addTags("b", "em", "div", "p", "h1", "h2", "strong", "ol", "li", "ul", "u", "br")
+        val safelist = Safelist()
+        safelist.addTags("b", "em", "div", "p", "h1", "h2", "strong", "ol", "li", "ul", "u", "br")
         val doc = Jsoup.parse(content.boardContent)
-        val newDoc = Jsoup.clean(doc.toString(), whitelist)
+        val newDoc = Jsoup.clean(doc.toString(), safelist)
 
         // content body
         if (content.category == ContentType.SERMON) {
             // setup video/audio buttons
-            buttons_area.visibility = View.VISIBLE
-            btn_video.setOnClickListener {
-                detail_youtube_layout.visibility = View.VISIBLE
-                (detail_audio as PlayerControlView).hide()
-                if (detail_audio.player != null) {
-                    (detail_audio.player as SimpleExoPlayer).pause()
+            binding.buttonsArea.visibility = View.VISIBLE
+            binding.btnVideo.setOnClickListener {
+                binding.detailYoutubeLayout.visibility = View.VISIBLE
+                (binding.detailAudio as PlayerControlView).hide()
+                if (binding.detailAudio.player != null) {
+                    (binding.detailAudio.player as ExoPlayer).pause()
                 }
             }
-            btn_audio.setOnClickListener {
-                detail_youtube_layout.visibility = View.GONE
-                (detail_audio as PlayerControlView).show()
+            binding.btnAudio.setOnClickListener {
+                binding.detailYoutubeLayout.visibility = View.GONE
+                (binding.detailAudio as PlayerControlView).show()
             }
         } else {
-            content_body.text =
+            binding.contentBody.text =
                 HtmlCompat.fromHtml(newDoc, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
         }
     }
 
     private fun setupYoutubeView(id: String) {
-        val yf = detail_youtube_fragment as YouTubePlayerSupportFragmentX
+        val fragment = supportFragmentManager.findFragmentById(R.id.detail_youtube_fragment)
+        val yf = fragment as YouTubePlayerSupportFragmentX
         yf.initialize(
             BuildConfig.YOUTUBE_API,
             object : YouTubePlayer.OnInitializedListener {
                 override fun onInitializationSuccess(provider: YouTubePlayer.Provider,
                                                      youTubePlayer: YouTubePlayer, b: Boolean) {
                     youTubePlayer.cueVideo(id)
-                    btn_video.visibility = View.VISIBLE
+                    binding.btnVideo.visibility = View.VISIBLE
                 }
 
                 override fun onInitializationFailure(
@@ -289,29 +300,29 @@ class DetailActivity : AppCompatActivity() {
         )
     }
 
-    private class DescriptionAdapter(val title: String, val contentText: String) :
-        PlayerNotificationManager.MediaDescriptionAdapter {
-
-        override fun getCurrentContentTitle(player: Player): String {
-            return title
-        }
-
-        @Nullable
-        override fun getCurrentContentText(player: Player): String? {
-            return contentText
-        }
-
-        @Nullable
-        override fun getCurrentLargeIcon(
-            player: Player,
-            callback: BitmapCallback
-        ): Bitmap? {
-            return null
-        }
-
-        @Nullable
-        override fun createCurrentContentIntent(player: Player): PendingIntent? {
-            return null
-        }
-    }
+//    private class DescriptionAdapter(val title: String, val contentText: String) :
+//        PlayerNotificationManager.MediaDescriptionAdapter {
+//
+//        override fun getCurrentContentTitle(player: Player): String {
+//            return title
+//        }
+//
+//        @Nullable
+//        override fun getCurrentContentText(player: Player): String? {
+//            return contentText
+//        }
+//
+//        @Nullable
+//        override fun getCurrentLargeIcon(
+//            player: Player,
+//            callback: BitmapCallback
+//        ): Bitmap? {
+//            return null
+//        }
+//
+//        @Nullable
+//        override fun createCurrentContentIntent(player: Player): PendingIntent? {
+//            return null
+//        }
+//    }
 }

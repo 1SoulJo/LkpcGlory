@@ -4,35 +4,38 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lkpc.android.app.glory.R
-import kotlinx.android.synthetic.main.activity_note_list.*
-import kotlinx.android.synthetic.main.tool_bar.*
+import com.lkpc.android.app.glory.databinding.ActivityNoteListBinding
 
 class NoteListActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityNoteListBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_list)
+        binding = ActivityNoteListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        toolbar_title.setText(R.string.my_notes)
+        findViewById<TextView>(R.id.toolbar_title).setText(R.string.my_notes)
 
         val viewModel: NoteViewModel by viewModels()
-        rv_note_list.layoutManager = LinearLayoutManager(this)
-        rv_note_list.adapter = viewModel.adapter
-        viewModel.getAllNotes().observe(this, { notes ->
+        binding.rvNoteList.layoutManager = LinearLayoutManager(this)
+        binding.rvNoteList.adapter = viewModel.adapter
+        viewModel.getAllNotes().observe(this) { notes ->
             if (notes.isEmpty()) {
-                empty_text_area.visibility = View.VISIBLE
+                binding.emptyTextArea.visibility = View.VISIBLE
             }
             viewModel.adapter.swapData(notes)
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -53,7 +56,7 @@ class NoteListActivity : AppCompatActivity() {
 
             R.id.note_menu_delete -> {
                 val viewModel: NoteViewModel by viewModels()
-                toolbar.startActionMode(viewModel.callback)!!
+                findViewById<Toolbar>(R.id.toolbar).startActionMode(viewModel.callback)!!
             }
         }
 

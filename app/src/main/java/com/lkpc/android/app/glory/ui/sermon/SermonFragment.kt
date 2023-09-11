@@ -10,55 +10,58 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lkpc.android.app.glory.R
+import com.lkpc.android.app.glory.databinding.FragmentSermonBinding
 import com.lkpc.android.app.glory.entity.BaseContent
-import kotlinx.android.synthetic.main.fragment_sermon.*
 
 class SermonFragment : Fragment() {
+
+    private var _binding: FragmentSermonBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_sermon, container, false)
+        _binding = FragmentSermonBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        rv_sermon.layoutManager = LinearLayoutManager(activity)
-        rv_sermon.adapter = SermonAdapter()
+        binding.rvSermon.layoutManager = LinearLayoutManager(activity)
+        binding.rvSermon.adapter = SermonAdapter()
 
         // data observation
         val viewModel: SermonViewModel by viewModels()
         val observer = Observer<List<BaseContent?>> { data ->
-            if (rv_sermon != null) {
-                val adapter = rv_sermon.adapter as SermonAdapter
-                if (adapter.isLoading) {
-                    (adapter.sermons as MutableList<BaseContent?>).removeAt(adapter.sermons.size - 1)
-                    adapter.isLoading = false
-                }
-                adapter.sermons = data
-                adapter.notifyDataSetChanged()
+            val adapter = binding.rvSermon.adapter as SermonAdapter
+            if (adapter.isLoading) {
+                (adapter.sermons as MutableList<BaseContent?>).removeAt(adapter.sermons.size - 1)
+                adapter.isLoading = false
             }
+            adapter.sermons = data
+            adapter.notifyDataSetChanged()
         }
         viewModel.getData().observe(activity as LifecycleOwner, observer)
 
         // setup refresh
-        sermon_layout.setOnRefreshListener {
+        binding.sermonLayout.setOnRefreshListener {
             viewModel.addData(0)
-            sermon_layout.isRefreshing = false
+            binding.sermonLayout.isRefreshing = false
         }
 
         // scroll listener
-        rv_sermon.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.rvSermon.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val adapter = rv_sermon.adapter as SermonAdapter
-                if (!rv_sermon.canScrollVertically(1) && !adapter.isLoading) {
+                val adapter = binding.rvSermon.adapter as SermonAdapter
+                if (!binding.rvSermon.canScrollVertically(1) && !adapter.isLoading) {
                     (adapter.sermons as MutableList).add(null)
                     adapter.notifyItemInserted(adapter.sermons.size - 1)
-                    rv_sermon.scrollToPosition(adapter.sermons.size - 1)
+                    binding.rvSermon.scrollToPosition(adapter.sermons.size - 1)
 
                     viewModel.addData(adapter.itemCount - 1)
 
@@ -67,5 +70,4 @@ class SermonFragment : Fragment() {
             }
         })
     }
-
 }

@@ -8,11 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.lkpc.android.app.glory.R
-import com.lkpc.android.app.glory.constants.WebUrls
 import com.lkpc.android.app.glory.entity.BaseContent
-import com.lkpc.android.app.glory.ui.basic_webview.BasicWebviewActivity
 import com.lkpc.android.app.glory.ui.detail.DetailActivity
-import kotlinx.android.synthetic.main.list_item_cell_church.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -25,8 +22,8 @@ class CellChurchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var cellChurchListItems: List<BaseContent?> = mutableListOf()
 
     class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        var title: TextView = view.cell_church_title
-        var date: TextView = view.cell_church_date
+        var title: TextView = view.findViewById(R.id.cell_church_title)
+        var date: TextView = view.findViewById(R.id.cell_church_date)
     }
 
     class LoadingViewHolder(view: View): RecyclerView.ViewHolder(view) {

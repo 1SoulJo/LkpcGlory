@@ -10,10 +10,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
-        android:tint="#7000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/banner" />
+        app:srcCompat="@drawable/banner"
+        app:tint="#7000" />
 
     <TextView
         android:id="@+id/channel_name"

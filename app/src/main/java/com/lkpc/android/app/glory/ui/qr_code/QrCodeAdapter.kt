@@ -7,13 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.entity.QrInfo
-import kotlinx.android.synthetic.main.list_item_qr_info.view.*
 
 class QrCodeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val id: TextView = view.qr_info_id
-        val info: TextView = view.qr_info
-        val date: TextView = view.qr_date
+        val id: TextView = view.findViewById(R.id.qr_info_id)
+        val info: TextView = view.findViewById(R.id.qr_info)
+        val date: TextView = view.findViewById(R.id.qr_date)
     }
 
     var qrInfoList: ArrayList<QrInfo> = arrayListOf()

@@ -25,7 +25,6 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
     private lateinit var testPref: SwitchPreferenceCompat
     private lateinit var qrPref: Preference
 
-
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
@@ -51,8 +50,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         qrPref.isVisible = adminPref.isChecked
     }
 
-    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
-        when (preference!!.key) {
+    override fun onPreferenceChange(preference: Preference, newValue: Any?): Boolean {
+        when (preference.key) {
             SharedPreference.NOTIFICATION_TOPIC_GENERAL -> {
                 if (newValue as Boolean) {
                     FirebaseMessaging.getInstance().subscribeToTopic(Notification.TOPIC_GENERAL)
@@ -90,8 +89,8 @@ class SettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChan
         return true
     }
 
-    override fun onPreferenceClick(preference: Preference?): Boolean {
-        when (preference!!.key) {
+    override fun onPreferenceClick(preference: Preference): Boolean {
+        when (preference.key) {
             SharedPreference.QR_SCANNER -> {
                 val i = Intent(requireContext(), QrCodeScanActivity::class.java)
                 startActivity(i)

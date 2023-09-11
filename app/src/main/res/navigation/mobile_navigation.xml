@@ -9,7 +9,20 @@
         android:id="@+id/navigation_home"
         android:name="com.lkpc.android.app.glory.ui.home.HomeFragment"
         android:label="@string/toronto_lpc"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_sermon"
+            app:destination="@id/navigation_sermon" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_meditation"
+            app:destination="@id/navigation_meditation" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_column"
+            app:destination="@id/navigation_column" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_fellow_news"
+            app:destination="@id/navigation_fellow_news" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_column"
@@ -30,9 +43,9 @@
         tools:layout="@layout/fragment_meditation" />
 
     <fragment
-        android:id="@+id/navigation_news"
-        android:name="com.lkpc.android.app.glory.ui.news.NewsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_news" />
+        android:id="@+id/navigation_fellow_news"
+        android:name="com.lkpc.android.app.glory.ui.fellow_news.FellowNewsFragment"
+        android:label="@string/fellow_news"
+        tools:layout="@layout/fragment_fellow_news" />
 
 </navigation>

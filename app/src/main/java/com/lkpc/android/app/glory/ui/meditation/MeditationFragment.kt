@@ -10,55 +10,58 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lkpc.android.app.glory.R
+import com.lkpc.android.app.glory.databinding.FragmentMeditationBinding
 import com.lkpc.android.app.glory.entity.BaseContent
-import kotlinx.android.synthetic.main.fragment_meditation.*
 
 class MeditationFragment : Fragment() {
+
+    private var _binding: FragmentMeditationBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_meditation, container, false)
+    ): View {
+        _binding = FragmentMeditationBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        rv_meditation.layoutManager = LinearLayoutManager(activity)
-        rv_meditation.adapter = MeditationAdapter()
+        binding.rvMeditation.layoutManager = LinearLayoutManager(activity)
+        binding.rvMeditation.adapter = MeditationAdapter()
 
         // data observation
         val viewModel: MeditationViewModel by viewModels()
         val observer = Observer<List<BaseContent?>> { data ->
-            if (rv_meditation != null) {
-                val adapter = rv_meditation.adapter as MeditationAdapter
-                if (adapter.isLoading) {
-                    (adapter.meditations as MutableList<BaseContent?>).removeAt(adapter.meditations.size - 1)
-                    adapter.isLoading = false
-                }
-                adapter.meditations = data
-                adapter.notifyDataSetChanged()
+            val adapter = binding.rvMeditation.adapter as MeditationAdapter
+            if (adapter.isLoading) {
+                (adapter.meditations as MutableList<BaseContent?>).removeAt(adapter.meditations.size - 1)
+                adapter.isLoading = false
             }
+            adapter.meditations = data
+            adapter.notifyDataSetChanged()
         }
         viewModel.getData().observe(activity as LifecycleOwner, observer)
 
         // setup refresh
-        meditation_layout.setOnRefreshListener {
+        binding.meditationLayout.setOnRefreshListener {
             viewModel.addData(0)
-            meditation_layout.isRefreshing = false
+            binding.meditationLayout.isRefreshing = false
         }
 
         // scroll listener
-        rv_meditation.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.rvMeditation.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val adapter = rv_meditation.adapter as MeditationAdapter
-                if (!rv_meditation.canScrollVertically(1) && !adapter.isLoading) {
+                val adapter = binding.rvMeditation.adapter as MeditationAdapter
+                if (!binding.rvMeditation.canScrollVertically(1) && !adapter.isLoading) {
                     (adapter.meditations as MutableList).add(null)
                     adapter.notifyItemInserted(adapter.meditations.size - 1)
-                    rv_meditation.scrollToPosition(adapter.meditations.size - 1)
+                    binding.rvMeditation.scrollToPosition(adapter.meditations.size - 1)
 
                     viewModel.addData(adapter.itemCount - 1)
 

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +23,8 @@ import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.lkpc.android.app.glory.R
+import com.lkpc.android.app.glory.databinding.ActivityQrCodeBinding
 import com.lkpc.android.app.glory.entity.QrInfo
-import kotlinx.android.synthetic.main.action_bar.*
-import kotlinx.android.synthetic.main.activity_qr_code.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import java.io.FileNotFoundException
@@ -34,6 +34,8 @@ import java.util.*
 
 
 class QrCodeScanActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityQrCodeBinding
+
     val requestCameraPermission = 201
     private val filename = "qrCodeScanList"
 
@@ -44,29 +46,30 @@ class QrCodeScanActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_qr_code)
+        binding = ActivityQrCodeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar!!.setDisplayShowCustomEnabled(true)
         supportActionBar!!.setCustomView(R.layout.action_bar)
 
-        ab_title.text = getString(R.string.qr_code_scan_title)
-        ab_btn_back.visibility = View.VISIBLE
-        ab_btn_back.setOnClickListener {
+        findViewById<TextView>(R.id.ab_title).text = getString(R.string.qr_code_scan_title)
+        findViewById<ImageView>(R.id.ab_btn_back).visibility = View.VISIBLE
+        findViewById<ImageView>(R.id.ab_btn_back).setOnClickListener {
             finish()
         }
 
-        rv_qr_list.layoutManager = LinearLayoutManager(this)
-        rv_qr_list.adapter = QrCodeAdapter()
+        binding.rvQrList.layoutManager = LinearLayoutManager(this)
+        binding.rvQrList.adapter = QrCodeAdapter()
 
-        btn_qr_code_clear.setOnClickListener {
+        binding.btnQrCodeClear.setOnClickListener {
             showListClearConfirmPopup()
         }
 
-        btn_qr_code_send_mail.setOnClickListener {
+        binding.btnQrCodeSendMail.setOnClickListener {
             val email = Intent(Intent.ACTION_SEND)
             email.putExtra(Intent.EXTRA_SUBJECT, "QR Code 데이터")
 
             var content = ""
-            for (qrInfo in (rv_qr_list.adapter as QrCodeAdapter).qrInfoList) {
+            for (qrInfo in (binding.rvQrList.adapter as QrCodeAdapter).qrInfoList) {
                 content += "${qrInfo.info},${qrInfo.date}\n\r"
             }
 
@@ -97,13 +100,13 @@ class QrCodeScanActivity : AppCompatActivity() {
         cameraSource = CameraSource.Builder(this, barcodeDetector)
             .setRequestedPreviewSize(300, 300).setAutoFocusEnabled(true).build()
 
-        surface_view.holder.addCallback(object : SurfaceHolder.Callback {
+        binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 try {
                     if (ActivityCompat.checkSelfPermission(
                             this@QrCodeScanActivity,
                             Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                        cameraSource.start(surface_view.holder)
+                        cameraSource.start(binding.surfaceView.holder)
                     } else {
                         ActivityCompat.requestPermissions(
                             this@QrCodeScanActivity,
@@ -153,10 +156,10 @@ class QrCodeScanActivity : AppCompatActivity() {
 
         builder.setPositiveButton("저장") { dialog, _ ->
             val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA)
-            (rv_qr_list.adapter as QrCodeAdapter).addInfo(
+            (binding.rvQrList.adapter as QrCodeAdapter).addInfo(
                 QrInfo(info, sdf.format(Date()))
             )
-            rv_qr_list.smoothScrollToPosition(0)
+            binding.rvQrList.smoothScrollToPosition(0)
             writeFile()
             dialog.dismiss()
         }
@@ -173,8 +176,8 @@ class QrCodeScanActivity : AppCompatActivity() {
         builder.setTitle("리스트를 삭제합니다")
 
         builder.setPositiveButton("확인") { dialog, _ ->
-            (rv_qr_list.adapter as QrCodeAdapter).clearList()
-            rv_qr_list.smoothScrollToPosition(0)
+            (binding.rvQrList.adapter as QrCodeAdapter).clearList()
+            binding.rvQrList.smoothScrollToPosition(0)
 
             writeFile()
             dialog.dismiss()
@@ -189,7 +192,7 @@ class QrCodeScanActivity : AppCompatActivity() {
 
     private fun writeFile() {
         val gson = Gson()
-        val fileContents = gson.toJson((rv_qr_list.adapter as QrCodeAdapter).qrInfoList)
+        val fileContents = gson.toJson((binding.rvQrList.adapter as QrCodeAdapter).qrInfoList)
         Log.d("QrCode", fileContents)
         openFileOutput(filename, Context.MODE_PRIVATE).use {
             it.write(fileContents.toByteArray())
@@ -204,11 +207,11 @@ class QrCodeScanActivity : AppCompatActivity() {
                     val myType = object : TypeToken<ArrayList<QrInfo>>() {}.type
                     val info = gson.fromJson<ArrayList<QrInfo>>(line, myType)
                     if (info.isNotEmpty()) {
-                        (rv_qr_list.adapter as QrCodeAdapter).qrInfoList = info
-                        (rv_qr_list.adapter as QrCodeAdapter).notifyDataSetChanged()
+                        (binding.rvQrList.adapter as QrCodeAdapter).qrInfoList = info
+                        (binding.rvQrList.adapter as QrCodeAdapter).notifyDataSetChanged()
                     }
                 }
-                rv_qr_list.smoothScrollToPosition(0)
+                binding.rvQrList.smoothScrollToPosition(0)
             }
         } catch (e: FileNotFoundException) {
             e.printStackTrace()

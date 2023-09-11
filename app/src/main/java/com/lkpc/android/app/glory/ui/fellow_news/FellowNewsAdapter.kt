@@ -10,7 +10,6 @@ import com.google.gson.Gson
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.entity.BaseContent
 import com.lkpc.android.app.glory.ui.detail.DetailActivity
-import kotlinx.android.synthetic.main.list_item_fellow_news.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,8 +22,8 @@ class FellowNewsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var fellowNews: List<BaseContent?> = mutableListOf()
 
     class ItemViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        var title: TextView = view.fellow_news_title
-        var date: TextView = view.fellow_news_date
+        var title: TextView = view.findViewById(R.id.fellow_news_title)
+        var date: TextView = view.findViewById(R.id.fellow_news_date)
     }
 
     class LoadingViewHolder(view: View): RecyclerView.ViewHolder(view) {

@@ -2,27 +2,34 @@ package com.lkpc.android.app.glory.ui.news
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lkpc.android.app.glory.R
+import com.lkpc.android.app.glory.databinding.FragmentNewsBinding
 import com.lkpc.android.app.glory.entity.BaseContent
-import kotlinx.android.synthetic.main.action_bar.*
-import kotlinx.android.synthetic.main.fragment_news.*
 
 class NewsActivity : AppCompatActivity() {
+    private lateinit var binding: FragmentNewsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_news)
+        binding = FragmentNewsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportActionBar!!.setDisplayShowCustomEnabled(true)
         supportActionBar!!.setCustomView(R.layout.action_bar)
 
+        val titleTV: TextView = findViewById(R.id.ab_title)
+        val backBtn: ImageView = findViewById(R.id.ab_btn_back)
+
         // setup action bar
-        ab_title.text = getString(R.string.title_notifications)
-        ab_btn_back.visibility = View.VISIBLE
-        ab_btn_back.setOnClickListener {
+        titleTV.text = getString(R.string.title_notifications)
+        backBtn.visibility = View.VISIBLE
+        backBtn.setOnClickListener {
             finish()
         }
 
@@ -30,14 +37,14 @@ class NewsActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        rv_news.layoutManager = LinearLayoutManager(this)
-        rv_news.adapter = NewsAdapter()
+        binding.rvNews.layoutManager = LinearLayoutManager(this)
+        binding.rvNews.adapter = NewsAdapter()
 
         // data observation
         val viewModel: NewsViewModel by viewModels()
         val observer = Observer<List<BaseContent?>> { data ->
-            if (rv_news != null) {
-                val adapter = rv_news.adapter as NewsAdapter
+            if (binding.rvNews != null) {
+                val adapter = binding.rvNews.adapter as NewsAdapter
                 if (adapter.isLoading) {
                     (adapter.newsList as MutableList<BaseContent?>).removeAt(adapter.newsList.size - 1)
                     adapter.isLoading = false
@@ -49,15 +56,15 @@ class NewsActivity : AppCompatActivity() {
         viewModel.getData().observe(this, observer)
 
         // scroll listener
-        rv_news.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.rvNews.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val adapter = rv_news.adapter as NewsAdapter
-                if (!rv_news.canScrollVertically(1) && !adapter.isLoading) {
+                val adapter = binding.rvNews.adapter as NewsAdapter
+                if (!binding.rvNews.canScrollVertically(1) && !adapter.isLoading) {
                     (adapter.newsList as MutableList).add(null)
                     adapter.notifyItemInserted(adapter.newsList.size - 1)
-                    rv_news.scrollToPosition(adapter.newsList.size - 1)
+                    binding.rvNews.scrollToPosition(adapter.newsList.size - 1)
 
                     viewModel.addData(adapter.itemCount - 1)
 

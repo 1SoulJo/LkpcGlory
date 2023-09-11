@@ -6,18 +6,25 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.*
 import androidx.preference.PreferenceManager
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.lkpc.android.app.glory.constants.Notification
 import com.lkpc.android.app.glory.constants.Notification.Companion.CHANNEL_ID
 import com.lkpc.android.app.glory.constants.SharedPreference
 import com.lkpc.android.app.glory.constants.WebUrls
+import com.lkpc.android.app.glory.databinding.ActivityMainBinding
 import com.lkpc.android.app.glory.ui.basic_webview.BasicWebviewActivity
 import com.lkpc.android.app.glory.ui.bulletin.BulletinActivity
 import com.lkpc.android.app.glory.ui.calendar.CalendarActivity
@@ -25,6 +32,7 @@ import com.lkpc.android.app.glory.ui.cell_church.CellChurchActivity
 import com.lkpc.android.app.glory.ui.column.ColumnFragment
 import com.lkpc.android.app.glory.ui.detail.DetailActivity
 import com.lkpc.android.app.glory.ui.fellow_news.FellowNewsActivity
+import com.lkpc.android.app.glory.ui.fellow_news.FellowNewsFragment
 import com.lkpc.android.app.glory.ui.home.HomeFragment
 import com.lkpc.android.app.glory.ui.location.LocationActivity
 import com.lkpc.android.app.glory.ui.meditation.MeditationFragment
@@ -33,10 +41,6 @@ import com.lkpc.android.app.glory.ui.note.NoteListActivity
 import com.lkpc.android.app.glory.ui.qr_code.QrCodeGeneratorActivity
 import com.lkpc.android.app.glory.ui.sermon.SermonFragment
 import com.lkpc.android.app.glory.ui.settings.SettingsActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.tool_bar.*
-
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -46,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         const val TAG_SERMON = "sermon"
         const val TAG_MEDITATION = "meditation"
         const val TAG_NEWS = "news"
+        const val TAG_FELLOW_NEWS = "fellow_news"
     }
 
     private val homeFragment : HomeFragment by lazy {
@@ -93,19 +98,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val fellowNewsFragment : FellowNewsFragment by lazy {
+        val fr = supportFragmentManager.findFragmentByTag(TAG_FELLOW_NEWS)
+        if (fr != null) {
+            fr as FellowNewsFragment
+        } else {
+            FellowNewsFragment()
+        }
+    }
+
     private var selectedFragment : Int = R.id.navigation_home
     private var activeFragment  : Fragment? = null
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
 
-        toolbar_title.setText(R.string.lpc)
+        binding.appBarMain.toolBar.toolbarTitle.setText(R.string.lpc)
 
         // handle bundle data
         val data = intent.getStringExtra("contents")
@@ -126,53 +143,53 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_column -> activeFragment = columnFragment
             R.id.navigation_sermon -> activeFragment = sermonFragment
             R.id.navigation_meditation -> activeFragment = meditationFragment
-            R.id.navigation_news -> activeFragment = newsFragment
+            R.id.navigation_fellow_news -> activeFragment = fellowNewsFragment
         }
 
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().detach(nav_host_fragment).commitNow()
-            //add all fragments but show only active fragment
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.let {
+                supportFragmentManager.beginTransaction().detach(it).commitNow()
+            }
+            // add all fragments but show only active fragment
             supportFragmentManager.beginTransaction()
                 .add(R.id.nav_host_fragment, homeFragment, TAG_HOME).hide(homeFragment)
                 .add(R.id.nav_host_fragment, columnFragment, TAG_COLUMN).hide(columnFragment)
                 .add(R.id.nav_host_fragment, sermonFragment, TAG_SERMON).hide(sermonFragment)
                 .add(R.id.nav_host_fragment, meditationFragment , TAG_MEDITATION).hide(meditationFragment)
-                .add(R.id.nav_host_fragment, newsFragment , TAG_NEWS).hide(newsFragment)
+                .add(R.id.nav_host_fragment, fellowNewsFragment , TAG_FELLOW_NEWS).hide(fellowNewsFragment)
                 .show(activeFragment!!)
                 .commit()
         }
-
         setupNavigationView()
         setupNotification()
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isOpen) {
-            drawer_layout.closeDrawer(GravityCompat.START)
+        if (binding.drawerLayout.isOpen) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
         } else {
             super.onBackPressed()
         }
     }
 
     private fun setupNavigationView() {
-        val navController = findNavController(R.id.nav_host_fragment)
-
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
         // setup drawer
         appBarConfiguration = AppBarConfiguration(setOf(
             R.id.navigation_home, R.id.navigation_column, R.id.navigation_sermon,
-            R.id.navigation_meditation, R.id.navigation_news,
+            R.id.navigation_meditation, R.id.navigation_fellow_news,
             R.id.nav_menu_qr_code, R.id.nav_menu_my_note, R.id.nav_menu_online_meet,
             R.id.nav_menu_church_events, R.id.nav_menu_service_info,
-            R.id.nav_menu_nav_guide), drawer_layout)
+            R.id.nav_menu_nav_guide), binding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        drawer_nav_view.setupWithNavController(navController)
-        drawer_nav_view.setNavigationItemSelectedListener { item ->
-            drawer_layout.closeDrawer(GravityCompat.START)
+        binding.drawerNavView.setupWithNavController(navController)
+        binding.drawerNavView.setNavigationItemSelectedListener { item ->
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
 
             when (item.itemId) {
                 R.id.nav_menu_qr_code -> {
@@ -237,12 +254,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         // setup bottom navigation
-        bottom_nav_view.setupWithNavController(navController)
-        bottom_nav_view.setOnNavigationItemSelectedListener {
+        binding.appBarMain.bottomNavView.setupWithNavController(navController)
+        binding.appBarMain.bottomNavView.setOnItemSelectedListener {
             setFragment(it.itemId)
-        }
-        bottom_nav_view.setOnNavigationItemReselectedListener {
-            return@setOnNavigationItemReselectedListener
         }
     }
 
@@ -279,7 +293,7 @@ class MainActivity : AppCompatActivity() {
                     .show(homeFragment)
                     .commit()
                 activeFragment = homeFragment
-                toolbar_title.setText(R.string.lpc)
+                binding.appBarMain.toolBar.toolbarTitle.setText(R.string.lpc)
             }
             R.id.navigation_column  ->{
                 if (activeFragment is ColumnFragment) {
@@ -289,7 +303,7 @@ class MainActivity : AppCompatActivity() {
                     .show(columnFragment)
                     .commit()
                 activeFragment = columnFragment
-                toolbar_title.setText(R.string.title_column)
+                binding.appBarMain.toolBar.toolbarTitle.setText(R.string.title_column)
             }
             R.id.navigation_sermon ->{
                 if (activeFragment is SermonFragment) {
@@ -299,7 +313,7 @@ class MainActivity : AppCompatActivity() {
                     .show(sermonFragment)
                     .commit()
                 activeFragment = sermonFragment
-                toolbar_title.setText(R.string.title_sermon)
+                binding.appBarMain.toolBar.toolbarTitle.setText(R.string.title_sermon)
             }
             R.id.navigation_meditation ->{
                 if (activeFragment is MeditationFragment) {
@@ -309,16 +323,16 @@ class MainActivity : AppCompatActivity() {
                     .show(meditationFragment)
                     .commit()
                 activeFragment = meditationFragment
-                toolbar_title.setText(R.string.title_meditation)
+                binding.appBarMain.toolBar.toolbarTitle.setText(R.string.title_meditation)
             }
-            R.id.navigation_news ->{
-                if (activeFragment is NewsFragment) {
+            R.id.navigation_fellow_news ->{
+                if (activeFragment is FellowNewsFragment) {
                     return false
                 }
                 supportFragmentManager.beginTransaction().hide(activeFragment!!)
-                    .show(newsFragment).commit()
-                activeFragment = newsFragment
-                toolbar_title.setText(R.string.title_notifications)
+                    .show(fellowNewsFragment).commit()
+                activeFragment = fellowNewsFragment
+                binding.appBarMain.toolBar.toolbarTitle.setText(R.string.fellow_news)
             }
         }
         return true

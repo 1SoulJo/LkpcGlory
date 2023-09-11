@@ -40,8 +40,7 @@ class BulletinViewModel(private val isDowntown: Boolean) : ViewModel() {
 
 class BulletinViewModelFactory(param: Boolean) : ViewModelProvider.Factory {
     private val mParam: Boolean = param
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return BulletinViewModel(mParam) as T
     }
-
 }
