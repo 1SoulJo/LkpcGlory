@@ -23,7 +23,7 @@ class CellChurchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCellChurchBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_cell_church)
+        setContentView(binding.root)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.action_bar)
 
@@ -44,16 +44,14 @@ class CellChurchActivity : AppCompatActivity() {
         val viewModel : CellChurchViewModel by viewModels()
 
         val observer = Observer<List<BaseContent?>> { data ->
-            if (binding.rvCellChurch != null) {
-                val adapter = binding.rvCellChurch.adapter as CellChurchAdapter
-                if (adapter.isLoading) {
-                    (adapter.cellChurchListItems as MutableList<BaseContent?>)
-                        .removeAt(adapter.cellChurchListItems.size - 1)
-                    adapter.isLoading = false
-                }
-                adapter.cellChurchListItems = data
-                adapter.notifyDataSetChanged()
+            val adapter = binding.rvCellChurch.adapter as CellChurchAdapter
+            if (adapter.isLoading) {
+                (adapter.cellChurchListItems as MutableList<BaseContent?>)
+                    .removeAt(adapter.cellChurchListItems.size - 1)
+                adapter.isLoading = false
             }
+            adapter.cellChurchListItems = data
+            adapter.notifyDataSetChanged()
         }
         viewModel.getData().observe(this, observer)
 

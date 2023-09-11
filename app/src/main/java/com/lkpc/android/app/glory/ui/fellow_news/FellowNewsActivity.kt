@@ -44,16 +44,14 @@ class FellowNewsActivity : AppCompatActivity() {
         val viewModel : FellowNewsViewModel by viewModels()
 
         val observer = Observer<List<BaseContent?>> { data ->
-            if (binding.rvFellowNews != null) {
-                val adapter = binding.rvFellowNews.adapter as FellowNewsAdapter
-                if (adapter.isLoading) {
-                    (adapter.fellowNews as MutableList<BaseContent?>)
-                        .removeAt(adapter.fellowNews.size - 1)
-                    adapter.isLoading = false
-                }
-                adapter.fellowNews = data
-                adapter.notifyDataSetChanged()
+            val adapter = binding.rvFellowNews.adapter as FellowNewsAdapter
+            if (adapter.isLoading) {
+                (adapter.fellowNews as MutableList<BaseContent?>)
+                    .removeAt(adapter.fellowNews.size - 1)
+                adapter.isLoading = false
             }
+            adapter.fellowNews = data
+            adapter.notifyDataSetChanged()
         }
         viewModel.getData().observe(this, observer)
 

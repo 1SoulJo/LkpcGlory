@@ -34,7 +34,7 @@ class BasicWebviewActivity : AppCompatActivity() {
         }
 
         override fun onFailure(call: Call<List<BaseContent>>, t: Throwable) {
-            t?.printStackTrace()
+            t.printStackTrace()
         }
     }
 
@@ -77,7 +77,23 @@ class BasicWebviewActivity : AppCompatActivity() {
 
             TYPE_SERVICE_INFO -> {
                 val apiClient = ContentApiClient()
-                apiClient.loadServices(apiCallback)
+                apiClient.loadServices(object : Callback<BaseContent> {
+                    override fun onResponse(
+                        call: Call<BaseContent>,
+                        response: Response<BaseContent>
+                    ) {
+                        if (response.isSuccessful) {
+                            val list = response.body() as BaseContent
+                            var htmlData = list.boardContent!!
+                            htmlData = htmlData.replace('↵', 0.toChar())
+                            binding.webview.loadDataWithBaseURL(null, htmlData, "text/html", "utf-8", null);
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BaseContent>, t: Throwable) {
+                        t.printStackTrace()
+                    }
+                })
             }
 
             TYPE_NAV_GUIDE -> {

@@ -31,7 +31,7 @@ object EventRepository: Callback<List<Event>> {
         }
     }
 
-    override fun onFailure(call: Call<List<Event>>?, t: Throwable?) {
-        t?.printStackTrace()
+    override fun onFailure(call: Call<List<Event>>, t: Throwable) {
+        t.printStackTrace()
     }
 }

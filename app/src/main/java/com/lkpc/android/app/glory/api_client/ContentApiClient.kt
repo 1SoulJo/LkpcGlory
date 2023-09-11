@@ -50,7 +50,7 @@ class ContentApiClient {
         setupApi().loadDowntownBulletins(id=startId).enqueue(cb)
     }
 
-    fun loadServices(cb: Callback<List<BaseContent>>) {
+    fun loadServices(cb: Callback<BaseContent>) {
         setupApi().loadService().enqueue(cb)
     }
 

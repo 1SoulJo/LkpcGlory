@@ -1,5 +1,6 @@
 package com.lkpc.android.app.glory.ui.calendar
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -17,10 +18,11 @@ class CalendarActivity : AppCompatActivity() {
     private var actionBarTitle: TextView? = null
     private var actionBarBackBtn: ImageView? = null
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = CalendarFragmentBinding.inflate(layoutInflater)
-        setContentView(R.layout.calendar_fragment)
+        setContentView(binding.root)
         supportActionBar?.setDisplayShowCustomEnabled(true)
         supportActionBar?.setCustomView(R.layout.action_bar)
 
@@ -38,9 +40,9 @@ class CalendarActivity : AppCompatActivity() {
 
         binding.rvCalendar.layoutManager = LinearLayoutManager(this)
         binding.rvCalendar.adapter = viewModel.adapter
-        viewModel.getData().observe(this as LifecycleOwner, { events ->
+        viewModel.getData().observe(this as LifecycleOwner) { events ->
             (binding.rvCalendar.adapter as CalendarAdapter).items = events
             (binding.rvCalendar.adapter as CalendarAdapter).notifyDataSetChanged()
-        })
+        }
     }
 }

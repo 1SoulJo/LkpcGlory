@@ -28,7 +28,7 @@ interface ContentApi {
     fun loadDowntownBulletins(@Path("startId") id: Int): Call<List<BaseContent>>
 
     @GET("page/service")
-    fun loadService(): Call<List<BaseContent>>
+    fun loadService(): Call<BaseContent>
 
     @GET("page/location")
     fun loadLocation(): Call<List<BaseContent>>
