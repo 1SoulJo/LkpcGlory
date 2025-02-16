@@ -31,7 +31,7 @@ class MeditationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvMeditation.layoutManager = LinearLayoutManager(activity)
-        binding.rvMeditation.adapter = MeditationAdapter()
+        binding.rvMeditation.adapter = MeditationAdapter(this)
 
         // data observation
         val viewModel: MeditationViewModel by viewModels()

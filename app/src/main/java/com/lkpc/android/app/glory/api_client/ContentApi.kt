@@ -2,6 +2,7 @@ package com.lkpc.android.app.glory.api_client
 
 import com.lkpc.android.app.glory.entity.AdContent
 import com.lkpc.android.app.glory.entity.BaseContent
+import com.lkpc.android.app.glory.entity.MeditationV2
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -17,6 +18,9 @@ interface ContentApi {
 
     @GET("board/meditation/{startId}")
     fun loadMeditations(@Path("startId") id: Int): Call<List<BaseContent>>
+
+    @GET("meditation/list/{startId}")
+    fun loadMeditationList(@Path("startId") id: Int): Call<List<MeditationV2>>
 
     @GET("board/news/{startId}")
     fun loadNews(@Path("startId") id: Int): Call<List<BaseContent>>

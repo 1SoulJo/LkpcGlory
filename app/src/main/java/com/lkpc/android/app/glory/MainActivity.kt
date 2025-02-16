@@ -36,6 +36,7 @@ import com.lkpc.android.app.glory.ui.fellow_news.FellowNewsFragment
 import com.lkpc.android.app.glory.ui.home.HomeFragment
 import com.lkpc.android.app.glory.ui.location.LocationActivity
 import com.lkpc.android.app.glory.ui.meditation.MeditationFragment
+import com.lkpc.android.app.glory.ui.meditation_detail.MeditationDetailFragment
 import com.lkpc.android.app.glory.ui.news.NewsFragment
 import com.lkpc.android.app.glory.ui.note.NoteListActivity
 import com.lkpc.android.app.glory.ui.qr_code.QrCodeGeneratorActivity
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         const val TAG_COLUMN = "column"
         const val TAG_SERMON = "sermon"
         const val TAG_MEDITATION = "meditation"
+        const val TAG_MEDITATION_DETAIL = "meditation_detail"
         const val TAG_NEWS = "news"
         const val TAG_FELLOW_NEWS = "fellow_news"
     }
@@ -86,6 +88,15 @@ class MainActivity : AppCompatActivity() {
             fr as MeditationFragment
         } else {
             MeditationFragment()
+        }
+    }
+
+    private val meditationDetailFragment : MeditationDetailFragment by lazy {
+        val fr = supportFragmentManager.findFragmentByTag(TAG_MEDITATION_DETAIL)
+        if (fr != null) {
+            fr as MeditationDetailFragment
+        } else {
+            MeditationDetailFragment()
         }
     }
 
@@ -156,6 +167,7 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.nav_host_fragment, columnFragment, TAG_COLUMN).hide(columnFragment)
                 .add(R.id.nav_host_fragment, sermonFragment, TAG_SERMON).hide(sermonFragment)
                 .add(R.id.nav_host_fragment, meditationFragment , TAG_MEDITATION).hide(meditationFragment)
+                .add(R.id.nav_host_fragment, meditationDetailFragment , TAG_MEDITATION_DETAIL).hide(meditationDetailFragment)
                 .add(R.id.nav_host_fragment, fellowNewsFragment , TAG_FELLOW_NEWS).hide(fellowNewsFragment)
                 .show(activeFragment!!)
                 .commit()
@@ -280,6 +292,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setFragment(itemId: Int): Boolean {
         selectedFragment = itemId
+        supportFragmentManager.beginTransaction().hide(meditationDetailFragment).commitNow()
         when (itemId){
             R.id.navigation_home -> {
                 if (activeFragment is HomeFragment) {
@@ -312,9 +325,9 @@ class MainActivity : AppCompatActivity() {
                 binding.appBarMain.toolBar.toolbarTitle.setText(R.string.title_sermon)
             }
             R.id.navigation_meditation ->{
-                if (activeFragment is MeditationFragment) {
-                    return false
-                }
+//                if (activeFragment is MeditationFragment) {
+//                    return false
+//                }
                 supportFragmentManager.beginTransaction().hide(activeFragment!!)
                     .show(meditationFragment)
                     .commit()

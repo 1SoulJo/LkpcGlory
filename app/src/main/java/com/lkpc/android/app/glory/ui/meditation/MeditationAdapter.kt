@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -15,10 +16,11 @@ import com.lkpc.android.app.glory.data.NoteDatabase
 import com.lkpc.android.app.glory.entity.BaseContent
 import com.lkpc.android.app.glory.ui.basic_webview.BasicWebviewActivity
 import com.lkpc.android.app.glory.ui.detail.DetailActivity
+import com.lkpc.android.app.glory.ui.meditation_detail.MeditationDetailFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MeditationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MeditationAdapter(val fragment: MeditationFragment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val _typeItem: Int = 0
     private val _typeLoading: Int = 1
 
@@ -71,16 +73,25 @@ class MeditationAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     }
 
                     holder.itemView.setOnClickListener {
-                        if (meditation.files.isNullOrEmpty()) {
-                            holder.itemView.context.startActivity(i)
-                        } else {
-                            val pdfIntent =
-                            Intent(holder.itemView.context, BasicWebviewActivity::class.java)
-                            pdfIntent.putExtra("url",
-                                WebUrls.PDF_BASE.format(meditation.files!![0]))
-                            pdfIntent.putExtra("strTitle", meditation.title)
-                            holder.itemView.context.startActivity(pdfIntent)
-                        }
+                        val meditationDetailFr = fragment.activity?.supportFragmentManager?.findFragmentByTag("meditation_detail") ?: MeditationDetailFragment()
+                        val transaction: FragmentTransaction = fragment.parentFragmentManager.beginTransaction()
+                        transaction.hide(fragment)
+                        transaction.show(meditationDetailFr)
+
+//                        transaction.replace(R.id.nav_host_fragment, MeditationDetailFragment())
+//                        transaction.show(MeditationDetailFragment())
+//                        transaction.addToBackStack(null)
+                        transaction.commit()
+//                        if (meditation.files.isNullOrEmpty()) {
+//                            holder.itemView.context.startActivity(i)
+//                        } else {
+//                            val pdfIntent =
+//                            Intent(holder.itemView.context, BasicWebviewActivity::class.java)
+//                            pdfIntent.putExtra("url",
+//                                WebUrls.PDF_BASE.format(meditation.files!![0]))
+//                            pdfIntent.putExtra("strTitle", meditation.title)
+//                            holder.itemView.context.startActivity(pdfIntent)
+//                        }
                     }
                 }
             )

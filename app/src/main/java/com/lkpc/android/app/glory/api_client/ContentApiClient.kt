@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.lkpc.android.app.glory.constants.WebUrls
 import com.lkpc.android.app.glory.entity.AdContent
 import com.lkpc.android.app.glory.entity.BaseContent
+import com.lkpc.android.app.glory.entity.MeditationV2
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -36,6 +37,10 @@ class ContentApiClient {
 
     fun loadMeditations(startId: Int, cb: Callback<List<BaseContent>>) {
         setupApi().loadMeditations(id=startId).enqueue(cb)
+    }
+
+    fun loadMeditationsV2List(startId: Int, cb: Callback<List<MeditationV2>>) {
+        setupApi().loadMeditationList(id=startId).enqueue(cb)
     }
 
     fun loadNews(startId: Int, cb: Callback<List<BaseContent>>) {

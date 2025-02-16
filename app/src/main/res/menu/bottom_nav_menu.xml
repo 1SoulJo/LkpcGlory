@@ -17,14 +17,14 @@
         android:title="@string/title_sermon" />
 
     <item
-        android:id="@+id/navigation_meditation"
-        android:icon="@drawable/ic_meditation"
-        android:title="@string/title_meditation"/>
-
-    <item
         android:id="@+id/navigation_fellow_news"
         android:icon="@drawable/ic_notifications"
         android:checkable="false"
         android:title="@string/fellow_news" />
 
+
+    <item
+        android:id="@+id/navigation_meditation"
+        android:icon="@drawable/ic_meditation"
+        android:title="@string/title_meditation"/>
 </menu>
