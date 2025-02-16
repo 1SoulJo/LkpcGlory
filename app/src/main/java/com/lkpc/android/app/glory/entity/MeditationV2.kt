@@ -4,6 +4,10 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class MeditationV2 {
+    @SerializedName("_id")
+    @Expose
+    var id: ID? = null
+
     @SerializedName("title")
     @Expose
     var title: String? = null
@@ -38,5 +42,11 @@ class MeditationV2 {
 
     @SerializedName("scheduledDate")
     @Expose
-    var location: String? = null
+    var scheduledDate: String? = null
+}
+
+class ID {
+    @SerializedName("\$oid")
+    @Expose
+    var id: String? = null
 }

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lkpc.android.app.glory.databinding.FragmentMeditationBinding
 import com.lkpc.android.app.glory.entity.BaseContent
+import com.lkpc.android.app.glory.entity.MeditationV2
 
 class MeditationFragment : Fragment() {
 
@@ -31,14 +32,19 @@ class MeditationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvMeditation.layoutManager = LinearLayoutManager(activity)
-        binding.rvMeditation.adapter = MeditationAdapter(this)
+        binding.rvMeditation.adapter = MeditationAdapterV2(this)
+//        binding.rvMeditation.adapter = MeditationAdapter(this)
 
         // data observation
-        val viewModel: MeditationViewModel by viewModels()
-        val observer = Observer<List<BaseContent?>> { data ->
-            val adapter = binding.rvMeditation.adapter as MeditationAdapter
+        val viewModel: MeditationViewModelV2 by viewModels()
+//        val viewModel: MeditationViewModel by viewModels()
+        val observer = Observer<List<MeditationV2>> { data ->
+//        val observer = Observer<List<BaseContent?>> { data ->
+            val adapter = binding.rvMeditation.adapter as MeditationAdapterV2
+//            val adapter = binding.rvMeditation.adapter as MeditationAdapter
             if (adapter.isLoading) {
-                (adapter.meditations as MutableList<BaseContent?>).removeAt(adapter.meditations.size - 1)
+                (adapter.meditations as MutableList<MeditationV2>).removeAt(adapter.meditations.size - 1)
+//                (adapter.meditations as MutableList<BaseContent?>).removeAt(adapter.meditations.size - 1)
                 adapter.isLoading = false
             }
             adapter.meditations = data
@@ -57,7 +63,8 @@ class MeditationFragment : Fragment() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                val adapter = binding.rvMeditation.adapter as MeditationAdapter
+                val adapter = binding.rvMeditation.adapter as MeditationAdapterV2
+//                val adapter = binding.rvMeditation.adapter as MeditationAdapter
                 if (!binding.rvMeditation.canScrollVertically(1) && !adapter.isLoading) {
                     (adapter.meditations as MutableList).add(null)
                     adapter.notifyItemInserted(adapter.meditations.size - 1)

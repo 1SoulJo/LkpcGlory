@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 interface ContentApi {
@@ -20,7 +21,7 @@ interface ContentApi {
     fun loadMeditations(@Path("startId") id: Int): Call<List<BaseContent>>
 
     @GET("meditation/list/{startId}")
-    fun loadMeditationList(@Path("startId") id: Int): Call<List<MeditationV2>>
+    fun loadMeditationsV2(@Path("startId") id: Int, @Query(value="target_date_str", encoded=true) targetDate: String): Call<List<MeditationV2>>
 
     @GET("board/news/{startId}")
     fun loadNews(@Path("startId") id: Int): Call<List<BaseContent>>

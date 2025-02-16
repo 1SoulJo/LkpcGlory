@@ -36,11 +36,11 @@ class ContentApiClient {
     }
 
     fun loadMeditations(startId: Int, cb: Callback<List<BaseContent>>) {
-        setupApi().loadMeditations(id=startId).enqueue(cb)
+        setupApi().loadMeditations(id = startId).enqueue(cb)
     }
 
-    fun loadMeditationsV2List(startId: Int, cb: Callback<List<MeditationV2>>) {
-        setupApi().loadMeditationList(id=startId).enqueue(cb)
+    fun loadMeditationsV2(startId: Int, targetDate: String, cb: Callback<List<MeditationV2>>) {
+        setupApi().loadMeditationsV2(id = startId, targetDate = targetDate).enqueue(cb)
     }
 
     fun loadNews(startId: Int, cb: Callback<List<BaseContent>>) {
