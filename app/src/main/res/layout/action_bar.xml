@@ -10,7 +10,7 @@
         android:id="@+id/ab_title"
         android:layout_width="@dimen/detail_view_title_width"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+        android:textColor="@color/newToolbarTitle"
         android:ellipsize="end"
         android:gravity="center"
         android:textSize="18sp"

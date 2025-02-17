@@ -2,6 +2,7 @@ package com.lkpc.android.app.glory.ui.meditation_detail
 
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -55,7 +56,7 @@ class MedDetailMainFragment : Fragment(R.layout.fragment_med_detail_main) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.bibleSpinner.adapter = ArrayAdapter(view.context,
-            android.R.layout.simple_spinner_dropdown_item,
+            android.R.layout.simple_dropdown_item_1line,
             listOf("개역개정", "새번역", "ESV"))
 
         binding.bibleSpinner.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
@@ -88,13 +89,10 @@ class MedDetailMainFragment : Fragment(R.layout.fragment_med_detail_main) {
 
             binding.videoLoadingView.visibility = View.GONE
             binding.youtubeVideoLayout.visibility = View.GONE
+        }
 
-//            if (dataModel.videoLink == null) {
-//                binding.videoLoadingView.visibility = View.VISIBLE
-//            } else {
-//                binding.youtubeVideoLayout.visibility = View.VISIBLE
-//                setupYoutubeView(dataModel.videoLink)
-//            }
+        viewModel.currentTextSize.observe(viewLifecycleOwner) { size ->
+            binding.bibleMain.setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
         }
 
         binding.videoBtn.setOnClickListener {

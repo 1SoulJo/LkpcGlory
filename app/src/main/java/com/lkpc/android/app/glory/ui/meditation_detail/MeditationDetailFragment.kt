@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
@@ -65,6 +67,9 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
         val viewModel: MeditationViewModelV2 by activityViewModels()
         viewModel.currentModel.observe(viewLifecycleOwner) {
             updateContent(it)
+        }
+        viewModel.getData().observe(activity as LifecycleOwner) { data ->
+            viewModel.setCurrentModel(data.first())
         }
     }
 

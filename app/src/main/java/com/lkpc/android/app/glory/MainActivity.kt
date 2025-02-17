@@ -3,22 +3,23 @@ package com.lkpc.android.app.glory
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.MenuItem
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.*
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import com.lkpc.android.app.glory.constants.Notification
 import com.lkpc.android.app.glory.constants.Notification.Companion.CHANNEL_ID
@@ -36,10 +37,10 @@ import com.lkpc.android.app.glory.ui.fellow_news.FellowNewsFragment
 import com.lkpc.android.app.glory.ui.home.HomeFragment
 import com.lkpc.android.app.glory.ui.location.LocationActivity
 import com.lkpc.android.app.glory.ui.meditation.MeditationFragment
+import com.lkpc.android.app.glory.ui.meditation.MeditationViewModelV2
 import com.lkpc.android.app.glory.ui.meditation_detail.MeditationDetailFragment
 import com.lkpc.android.app.glory.ui.news.NewsFragment
 import com.lkpc.android.app.glory.ui.note.NoteListActivity
-import com.lkpc.android.app.glory.ui.qr_code.QrCodeGeneratorActivity
 import com.lkpc.android.app.glory.ui.sermon.SermonFragment
 import com.lkpc.android.app.glory.ui.settings.SettingsActivity
 
@@ -153,7 +154,8 @@ class MainActivity : AppCompatActivity() {
             R.id.navigation_home -> activeFragment = homeFragment
             R.id.navigation_column -> activeFragment = columnFragment
             R.id.navigation_sermon -> activeFragment = sermonFragment
-            R.id.navigation_meditation -> activeFragment = meditationFragment
+            R.id.navigation_meditation -> activeFragment = meditationDetailFragment
+//            R.id.navigation_meditation -> activeFragment = meditationFragment
             R.id.navigation_fellow_news -> activeFragment = fellowNewsFragment
         }
 
@@ -174,6 +176,13 @@ class MainActivity : AppCompatActivity() {
         }
         setupNavigationView()
         setupNotification()
+
+        binding.appBarMain.toolBar.toolbarTitle.setTextColor(Color.parseColor("#666566"))
+
+        binding.appBarMain.toolBar.toolbarFontBtn.setOnClickListener {
+            val viewModel: MeditationViewModelV2 by viewModels()
+            viewModel.onTextSizeButtonClicked()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -293,6 +302,7 @@ class MainActivity : AppCompatActivity() {
     private fun setFragment(itemId: Int): Boolean {
         selectedFragment = itemId
         supportFragmentManager.beginTransaction().hide(meditationDetailFragment).commitNow()
+        resetToolbar()
         when (itemId){
             R.id.navigation_home -> {
                 if (activeFragment is HomeFragment) {
@@ -329,10 +339,11 @@ class MainActivity : AppCompatActivity() {
 //                    return false
 //                }
                 supportFragmentManager.beginTransaction().hide(activeFragment!!)
-                    .show(meditationFragment)
+                    .show(meditationDetailFragment)
                     .commit()
-                activeFragment = meditationFragment
+                activeFragment = meditationDetailFragment
                 binding.appBarMain.toolBar.toolbarTitle.setText(R.string.title_meditation)
+                binding.appBarMain.toolBar.toolbarFontBtn.visibility = View.VISIBLE
             }
             R.id.navigation_fellow_news ->{
                 if (activeFragment is FellowNewsFragment) {
@@ -350,5 +361,9 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(CURRENT_FRAGMENT, selectedFragment)
+    }
+
+    private fun resetToolbar() {
+        binding.appBarMain.toolBar.toolbarFontBtn.visibility = View.GONE
     }
 }

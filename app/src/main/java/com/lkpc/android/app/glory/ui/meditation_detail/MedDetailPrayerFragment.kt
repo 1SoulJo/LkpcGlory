@@ -1,6 +1,7 @@
 package com.lkpc.android.app.glory.ui.meditation_detail
 
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,10 @@ class MedDetailPrayerFragment : Fragment(R.layout.fragment_med_detail_prayer) {
                 builder.append("\n\n")
             }
             binding.medPrayer.text = builder.toString()
+        }
+
+        viewModel.currentTextSize.observe(viewLifecycleOwner) { size ->
+            binding.medPrayer.setTextSize(TypedValue.COMPLEX_UNIT_SP, size)
         }
     }
 }

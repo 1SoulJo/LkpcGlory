@@ -44,19 +44,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="end"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:orientation="horizontal">
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/videoBtn"
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:text="비디오"
-            app:iconGravity="textEnd" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/videoBtn"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:padding="0dp"
+                android:layout_marginEnd="8dp"
+                android:text="비디오"
+                app:cornerRadius="12dp"
+                app:backgroundTint="#FF0000"
+                app:icon="@drawable/video_icon"
+                app:iconSize="20dp"
+                app:iconGravity="textEnd" />
 
-        <Spinner
-            android:id="@+id/bible_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_bible_spinner">
+                <Spinner
+                    android:id="@+id/bible_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp" />
+            </RelativeLayout>
         </LinearLayout>
 
         <TextView

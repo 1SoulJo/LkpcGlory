@@ -38,9 +38,9 @@
 
     <fragment
         android:id="@+id/navigation_meditation"
-        android:name="com.lkpc.android.app.glory.ui.meditation.MeditationFragment"
+        android:name="com.lkpc.android.app.glory.ui.meditation_detail.MeditationDetailFragment"
         android:label="@string/title_meditation"
-        tools:layout="@layout/fragment_meditation" />
+        tools:layout="@layout/fragment_meditation_detail" />
 
     <fragment
         android:id="@+id/navigation_fellow_news"

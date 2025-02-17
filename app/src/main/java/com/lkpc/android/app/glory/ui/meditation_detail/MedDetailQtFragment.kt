@@ -1,6 +1,7 @@
 package com.lkpc.android.app.glory.ui.meditation_detail
 
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,11 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
                 appTexts[i].visibility = View.VISIBLE
                 appEdits[i].visibility = View.VISIBLE
             }
+        }
+
+        viewModel.currentTextSize.observe(viewLifecycleOwner) { size ->
+            refTexts.forEach { it.setTextSize(TypedValue.COMPLEX_UNIT_SP, size) }
+            appTexts.forEach { it.setTextSize(TypedValue.COMPLEX_UNIT_SP, size) }
         }
     }
 }

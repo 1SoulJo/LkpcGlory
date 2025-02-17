@@ -11,260 +11,296 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
         android:clipToPadding="false"
         android:paddingBottom="128dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="묵상 | Reflection"
-            android:textStyle="bold"
-            android:textColor="#009593"
-            android:layout_marginBottom="8dp"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/qt_ref_text1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone"
-            />
-
-        <EditText
-            android:id="@+id/qt_ref_edit1"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="12dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="묵상 | Reflection"
+                android:textStyle="bold"
+                android:textColor="#009593"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/qt_ref_text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/qt_ref_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone"
+                />
 
-        <EditText
-            android:id="@+id/qt_ref_edit2"
+            <EditText
+                android:id="@+id/qt_ref_edit1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="12dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qt_ref_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_ref_edit2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="8dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qt_ref_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_ref_edit3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="4dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qt_ref_text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_ref_edit4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="4dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qt_ref_text5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_ref_edit5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="4dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <!-- Application -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="적용 | Application"
+                android:textColor="#009593"
+                android:textStyle="bold"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/qt_app_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_app_edit1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="4dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qt_app_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_app_edit2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="4dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qt_app_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_app_edit3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="4dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qt_app_text4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_app_edit4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="4dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/qt_app_text5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#292724"
+                android:textSize="18sp"
+                android:layout_marginBottom="4dp"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/qt_app_edit5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:autofillHints="Text"
+                android:background="@drawable/qt_edit_box_bg"
+                android:backgroundTint="#E5F4F4"
+                android:inputType="textMultiLine"
+                android:layout_marginBottom="4dp"
+                android:gravity="top"
+                android:padding="8dp"
+                android:visibility="gone" />
+        </LinearLayout>
+        <!-- Bottom buttons -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="8dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/qt_ref_text3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/qt_ref_edit3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="4dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/qt_ref_text4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/qt_ref_edit4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="4dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/qt_ref_text5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/qt_ref_edit5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="4dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="적용 | Application"
-            android:textColor="#009593"
-            android:textStyle="bold"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/qt_app_text1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/qt_app_edit1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="4dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/qt_app_text2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/qt_app_edit2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="4dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/qt_app_text3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/qt_app_edit3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="4dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/qt_app_text4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/qt_app_edit4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="4dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/qt_app_text5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#292724"
-            android:textSize="18sp"
-            android:layout_marginBottom="4dp"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/qt_app_edit5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="100dp"
-            android:autofillHints="Text"
-            android:background="@drawable/qt_edit_box_bg"
-            android:backgroundTint="#E5F4F4"
-            android:inputType="textMultiLine"
-            android:layout_marginBottom="4dp"
-            android:gravity="top"
-            android:padding="8dp"
-            android:visibility="gone" />
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            android:paddingVertical="4dp"
+            android:background="#99BCB9">
+            <Button
+                android:id="@+id/qt_save_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="12dp"
+                android:backgroundTint="#009593"
+                android:stateListAnimator="@null"
+                android:text="저장"/>
+            <Button
+                android:id="@+id/qt_share_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:backgroundTint="#E5F4F4"
+                android:textColor="#009593"
+                android:stateListAnimator="@null"
+                android:text="공유"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
