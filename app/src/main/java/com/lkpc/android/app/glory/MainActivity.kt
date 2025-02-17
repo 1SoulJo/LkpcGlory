@@ -83,14 +83,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val meditationFragment : MeditationFragment by lazy {
-        val fr = supportFragmentManager.findFragmentByTag(TAG_MEDITATION)
-        if (fr != null) {
-            fr as MeditationFragment
-        } else {
-            MeditationFragment()
-        }
-    }
+//    private val meditationFragment : MeditationFragment by lazy {
+//        val fr = supportFragmentManager.findFragmentByTag(TAG_MEDITATION)
+//        if (fr != null) {
+//            fr as MeditationFragment
+//        } else {
+//            MeditationFragment()
+//        }
+//    }
 
     private val meditationDetailFragment : MeditationDetailFragment by lazy {
         val fr = supportFragmentManager.findFragmentByTag(TAG_MEDITATION_DETAIL)
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.nav_host_fragment, homeFragment, TAG_HOME).hide(homeFragment)
                 .add(R.id.nav_host_fragment, columnFragment, TAG_COLUMN).hide(columnFragment)
                 .add(R.id.nav_host_fragment, sermonFragment, TAG_SERMON).hide(sermonFragment)
-                .add(R.id.nav_host_fragment, meditationFragment , TAG_MEDITATION).hide(meditationFragment)
+//                .add(R.id.nav_host_fragment, meditationFragment , TAG_MEDITATION).hide(meditationFragment)
                 .add(R.id.nav_host_fragment, meditationDetailFragment , TAG_MEDITATION_DETAIL).hide(meditationDetailFragment)
                 .add(R.id.nav_host_fragment, fellowNewsFragment , TAG_FELLOW_NEWS).hide(fellowNewsFragment)
                 .show(activeFragment!!)
@@ -335,9 +335,6 @@ class MainActivity : AppCompatActivity() {
                 binding.appBarMain.toolBar.toolbarTitle.setText(R.string.title_sermon)
             }
             R.id.navigation_meditation ->{
-//                if (activeFragment is MeditationFragment) {
-//                    return false
-//                }
                 supportFragmentManager.beginTransaction().hide(activeFragment!!)
                     .show(meditationDetailFragment)
                     .commit()

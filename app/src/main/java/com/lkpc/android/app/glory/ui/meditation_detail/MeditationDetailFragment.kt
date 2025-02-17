@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
@@ -22,6 +21,8 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
     private lateinit var adapter: MedViewPagerAdapter
+    private lateinit var dataList: List<MeditationV2>
+    private var currentIndex: Int = 0
 
     private var _binding: FragmentMeditationDetailBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
@@ -69,7 +70,30 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
             updateContent(it)
         }
         viewModel.getData().observe(activity as LifecycleOwner) { data ->
-            viewModel.setCurrentModel(data.first())
+            viewModel.setCurrentModel(data[currentIndex])
+            dataList = data
+        }
+
+        binding.todayBtn.setOnClickListener {
+            if (currentIndex == 0) {
+                return@setOnClickListener
+            }
+            currentIndex = 0
+            viewModel.setCurrentModel(dataList[currentIndex])
+        }
+        binding.dateLeft.setOnClickListener {
+            if (dataList.size <= currentIndex + 1) {
+                return@setOnClickListener
+            }
+            currentIndex += 1
+            viewModel.setCurrentModel(dataList[currentIndex])
+        }
+        binding.dateRight.setOnClickListener {
+            if (currentIndex <= 0) {
+                return@setOnClickListener
+            }
+            currentIndex -= 1
+            viewModel.setCurrentModel(dataList[currentIndex])
         }
     }
 

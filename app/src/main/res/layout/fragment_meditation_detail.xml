@@ -13,7 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
-        android:layout_width="409dp"
+        android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"

@@ -24,7 +24,7 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMedDetailQtBinding.inflate(inflater, container, false)
         return binding.root
     }
