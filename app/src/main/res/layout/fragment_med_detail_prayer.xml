@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".ui.meditation_detail.MedDetailPrayerFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/med_prayer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Prayer" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="128dp"
+        android:clipToPadding="false"
+        android:text="Prayer"
+        android:lineSpacingExtra="8sp"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
-</FrameLayout>
+</ScrollView>

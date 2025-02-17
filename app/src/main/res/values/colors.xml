@@ -7,4 +7,6 @@
     <color name="selectedDot">#FFFFFF</color>
     <color name="menuText">#000000</color>
     <color name="home_borderline">#EEEEEE</color>
+    <color name="tab_bg_selected">#A8DADA</color>
+    <color name="tab_bg_unselected">#DDF1F0</color>
 </resources>

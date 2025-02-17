@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
@@ -75,6 +77,8 @@ class MeditationAdapterV2(val fragment: MeditationFragment) : RecyclerView.Adapt
                     }
 
                     holder.itemView.setOnClickListener {
+                        val viewModel: MeditationViewModelV2 by fragment.activityViewModels()
+                        viewModel.setCurrentModel(meditation)
                         val meditationDetailFr = fragment.activity?.supportFragmentManager?.findFragmentByTag("meditation_detail") ?: MeditationDetailFragment()
                         val transaction: FragmentTransaction = fragment.parentFragmentManager.beginTransaction()
                         transaction.hide(fragment)

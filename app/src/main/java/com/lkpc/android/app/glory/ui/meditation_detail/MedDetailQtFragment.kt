@@ -5,56 +5,48 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.lkpc.android.app.glory.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import com.lkpc.android.app.glory.databinding.FragmentMedDetailPrayerBinding
+import com.lkpc.android.app.glory.databinding.FragmentMedDetailQtBinding
+import com.lkpc.android.app.glory.ui.meditation.MeditationViewModelV2
 
 /**
  * A simple [Fragment] subclass.
  * Use the [MedDetailQtFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MedDetailQtFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
+    private var _binding: FragmentMedDetailQtBinding? = null
+    // This property is only valid between onCreateView and onDestroyView.
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_med_detail_qt, container, false)
+        _binding = FragmentMedDetailQtBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MedDetailQtFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MedDetailQtFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val refTexts = listOf(binding.qtRefText1, binding.qtRefText2, binding.qtRefText3, binding.qtRefText4, binding.qtRefText5)
+        val refEdits = listOf(binding.qtRefEdit1, binding.qtRefEdit2, binding.qtRefEdit3, binding.qtRefEdit4, binding.qtRefEdit5)
+        val appTexts = listOf(binding.qtAppText1, binding.qtAppText2, binding.qtAppText3, binding.qtAppText4, binding.qtAppText5)
+        val appEdits = listOf(binding.qtAppEdit1, binding.qtAppEdit2, binding.qtAppEdit3, binding.qtAppEdit4, binding.qtAppEdit5)
+        val viewModel: MeditationViewModelV2 by activityViewModels()
+        viewModel.currentModel.observe(viewLifecycleOwner) { it ->
+            it?.reflectionList?.forEachIndexed { i, s ->
+                refTexts[i].text = "${i + 1}. $s"
+                refTexts[i].visibility = View.VISIBLE
+                refEdits[i].visibility = View.VISIBLE
             }
+            it?.applyList?.forEachIndexed { i, s ->
+                appTexts[i].text = "${i + 1}. $s"
+                appTexts[i].visibility = View.VISIBLE
+                appEdits[i].visibility = View.VISIBLE
+            }
+        }
     }
 }

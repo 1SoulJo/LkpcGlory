@@ -6,12 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.databinding.FragmentMeditationDetailBinding
+import com.lkpc.android.app.glory.entity.MeditationV2
+import com.lkpc.android.app.glory.ui.meditation.MeditationViewModelV2
 
 class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
     private lateinit var tabLayout: TabLayout
@@ -30,7 +33,6 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
     ): View {
         _binding = FragmentMeditationDetailBinding.inflate(inflater, container, false)
         return binding.root
-//        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,11 +53,27 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
 
             override fun onTabReselected(tab: TabLayout.Tab) = Unit
         })
+
         viewPager.registerOnPageChangeCallback(object: OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
+
                 tabLayout.getTabAt(position)?.select()
             }
         })
+
+        val viewModel: MeditationViewModelV2 by activityViewModels()
+        viewModel.currentModel.observe(viewLifecycleOwner) {
+            updateContent(it)
+        }
+    }
+
+    private fun updateContent(model: MeditationV2?) {
+        if (model == null) {
+            return
+        }
+        // TODO: Update the fragment
+        binding.titleText.text = model.title
+        binding.medDate.text = model.scheduledDate
     }
 }

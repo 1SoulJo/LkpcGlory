@@ -12,7 +12,7 @@ class MeditationV2 {
     @Expose
     var title: String? = null
 
-    @SerializedName("bible1")
+    @SerializedName("bible")
     @Expose
     var bible1: String? = null
 

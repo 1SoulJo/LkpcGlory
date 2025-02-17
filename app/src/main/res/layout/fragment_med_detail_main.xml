@@ -1,14 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:contentDescription="@string/meditation_main"
+    android:fillViewport="true"
+    android:paddingBottom="48dp"
     tools:context=".ui.meditation_detail.MedDetailMainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Main" />
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="128dp"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/video_loading_view"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:contentDescription="Video loading"
+            android:src="@drawable/video_loading"
+            android:visibility="gone"
+            />
+
+        <LinearLayout
+            android:id="@+id/youtube_video_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="vertical" >
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtube_player_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:autoPlay="false" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/videoBtn"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:text="비디오"
+            app:iconGravity="textEnd" />
+
+        <Spinner
+            android:id="@+id/bible_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/bible_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingLeft="24dp"
+            android:paddingEnd="24dp"
+            android:lineSpacingExtra="4sp"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+    </LinearLayout>
+</ScrollView>
