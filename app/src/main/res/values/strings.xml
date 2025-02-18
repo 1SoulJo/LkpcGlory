@@ -109,4 +109,6 @@
     <string name="med_tab_qt">묵상</string>
     <string name="calendar">calendar</string>
     <string name="meditation_main">meditation main</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

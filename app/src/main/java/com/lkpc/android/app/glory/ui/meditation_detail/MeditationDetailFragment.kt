@@ -72,6 +72,11 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
         viewModel.getData().observe(activity as LifecycleOwner) { data ->
             viewModel.setCurrentModel(data[currentIndex])
             dataList = data
+            dataList.forEach {
+                it.scheduledDate?.let { date ->
+                    viewModel.dataMap[date] = it
+                }
+            }
         }
 
         binding.todayBtn.setOnClickListener {
@@ -95,13 +100,15 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
             currentIndex -= 1
             viewModel.setCurrentModel(dataList[currentIndex])
         }
+        binding.calBtn.setOnClickListener {
+            MedCalendarFragment().show(childFragmentManager, "MedCal")
+        }
     }
 
     private fun updateContent(model: MeditationV2?) {
         if (model == null) {
             return
         }
-        // TODO: Update the fragment
         binding.titleText.text = model.title
         binding.medDate.text = model.scheduledDate
     }

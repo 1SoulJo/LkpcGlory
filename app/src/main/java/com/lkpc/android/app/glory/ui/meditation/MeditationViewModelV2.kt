@@ -12,6 +12,7 @@ class MeditationViewModelV2 : ViewModel() {
 
     val currentModel = MutableLiveData<MeditationV2?>()
     val currentTextSize = MutableLiveData<Float>()
+    val dataMap: MutableMap<String, MeditationV2> = mutableMapOf()
 
     private var currentTextSizeIndex: Int = 0
 

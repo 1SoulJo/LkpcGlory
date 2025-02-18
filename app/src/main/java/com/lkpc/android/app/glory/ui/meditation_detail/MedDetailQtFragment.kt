@@ -38,6 +38,12 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
         val appEdits = listOf(binding.qtAppEdit1, binding.qtAppEdit2, binding.qtAppEdit3, binding.qtAppEdit4, binding.qtAppEdit5)
         val viewModel: MeditationViewModelV2 by activityViewModels()
         viewModel.currentModel.observe(viewLifecycleOwner) { it ->
+            refEdits.forEach {
+                it.text.clear()
+            }
+            appEdits.forEach {
+                it.text.clear()
+            }
             it?.reflectionList?.forEachIndexed { i, s ->
                 refTexts[i].text = "${i + 1}. $s"
                 refTexts[i].visibility = View.VISIBLE
