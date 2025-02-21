@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.data.QtDatabase
 import com.lkpc.android.app.glory.databinding.FragmentMedDetailPrayerBinding
@@ -60,6 +62,50 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
                 appTexts[i].text = "${i + 1}. $s"
                 appTexts[i].visibility = View.VISIBLE
                 appEdits[i].visibility = View.VISIBLE
+            }
+
+            context?.let { ctx ->
+                val dao = QtDatabase.getDatabase(ctx).qtDao()
+                model?.id?.id?.let { contentId ->
+//                    GlobalScope.launch {
+                        val qt = dao.loadByContentId(contentId)
+                        qt.observe(viewLifecycleOwner) observe2@ { data ->
+                            if (data == null) {
+                                return@observe2
+                            }
+                            data.refEdit1?.let { text ->
+                                binding.qtRefEdit1.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.refEdit2?.let { text ->
+                                binding.qtRefEdit2.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.refEdit3?.let { text ->
+                                binding.qtRefEdit3.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.refEdit4?.let { text ->
+                                binding.qtRefEdit4.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.refEdit5?.let { text ->
+                                binding.qtRefEdit5.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.appEdit1?.let { text ->
+                                binding.qtAppEdit1.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.appEdit2?.let { text ->
+                                binding.qtAppEdit2.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.appEdit3?.let { text ->
+                                binding.qtAppEdit3.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.appEdit4?.let { text ->
+                                binding.qtAppEdit4.setText(text, TextView.BufferType.EDITABLE)
+                            }
+                            data.appEdit5?.let { text ->
+                                binding.qtAppEdit5.setText(text, TextView.BufferType.EDITABLE)
+                            }
+//                        }
+                    }
+                }
             }
         }
 
