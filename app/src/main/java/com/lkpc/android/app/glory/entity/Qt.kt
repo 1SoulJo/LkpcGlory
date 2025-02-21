@@ -6,11 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "qt_table")
 data class Qt (
-    @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    @PrimaryKey
+    val contentId: String,
 
-    @ColumnInfo(name = "content_id")
-    val contentId: String?,
+    val date: String?,
 
     @ColumnInfo(name = "title")
     val title: String?,

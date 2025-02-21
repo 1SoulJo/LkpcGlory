@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.lkpc.android.app.glory.entity.Qt
 
-@Database(entities = [Qt::class], version = 1)
+@Database(entities = [Qt::class], version = 3)
 abstract class QtDatabase : RoomDatabase() {
     abstract fun qtDao(): QtDao
 

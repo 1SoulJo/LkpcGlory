@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.lkpc.android.app.glory.R
@@ -67,43 +68,41 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
             context?.let { ctx ->
                 val dao = QtDatabase.getDatabase(ctx).qtDao()
                 model?.id?.id?.let { contentId ->
-//                    GlobalScope.launch {
-                        val qt = dao.loadByContentId(contentId)
-                        qt.observe(viewLifecycleOwner) observe2@ { data ->
-                            if (data == null) {
-                                return@observe2
-                            }
-                            data.refEdit1?.let { text ->
-                                binding.qtRefEdit1.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.refEdit2?.let { text ->
-                                binding.qtRefEdit2.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.refEdit3?.let { text ->
-                                binding.qtRefEdit3.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.refEdit4?.let { text ->
-                                binding.qtRefEdit4.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.refEdit5?.let { text ->
-                                binding.qtRefEdit5.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.appEdit1?.let { text ->
-                                binding.qtAppEdit1.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.appEdit2?.let { text ->
-                                binding.qtAppEdit2.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.appEdit3?.let { text ->
-                                binding.qtAppEdit3.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.appEdit4?.let { text ->
-                                binding.qtAppEdit4.setText(text, TextView.BufferType.EDITABLE)
-                            }
-                            data.appEdit5?.let { text ->
-                                binding.qtAppEdit5.setText(text, TextView.BufferType.EDITABLE)
-                            }
-//                        }
+                    val qt = dao.loadByContentId(contentId)
+                    qt.observe(viewLifecycleOwner) observe2@ { data ->
+                        if (data == null) {
+                            return@observe2
+                        }
+                        data.refEdit1?.let { text ->
+                            binding.qtRefEdit1.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.refEdit2?.let { text ->
+                            binding.qtRefEdit2.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.refEdit3?.let { text ->
+                            binding.qtRefEdit3.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.refEdit4?.let { text ->
+                            binding.qtRefEdit4.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.refEdit5?.let { text ->
+                            binding.qtRefEdit5.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.appEdit1?.let { text ->
+                            binding.qtAppEdit1.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.appEdit2?.let { text ->
+                            binding.qtAppEdit2.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.appEdit3?.let { text ->
+                            binding.qtAppEdit3.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.appEdit4?.let { text ->
+                            binding.qtAppEdit4.setText(text, TextView.BufferType.EDITABLE)
+                        }
+                        data.appEdit5?.let { text ->
+                            binding.qtAppEdit5.setText(text, TextView.BufferType.EDITABLE)
+                        }
                     }
                 }
             }
@@ -116,34 +115,46 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
 
         binding.qtSaveBtn.setOnClickListener {
             val context = context ?: return@setOnClickListener
-            val qt = Qt(
-                contentId = model?.id?.id,
-                title = model?.title,
-                refText1 = if (refTexts[0].text?.isNotEmpty() == true) refTexts[0].text?.toString() else null,
-                refText2 = if (refTexts[1].text?.isNotEmpty() == true) refTexts[1].text?.toString() else null,
-                refText3 = if (refTexts[2].text?.isNotEmpty() == true) refTexts[2].text?.toString() else null,
-                refText4 = if (refTexts[3].text?.isNotEmpty() == true) refTexts[3].text?.toString() else null,
-                refText5 = if (refTexts[4].text?.isNotEmpty() == true) refTexts[4].text?.toString() else null,
-                refEdit1 = if (refEdits[0].text?.isNotEmpty() == true) refEdits[0].text?.toString() else null,
-                refEdit2 = if (refEdits[1].text?.isNotEmpty() == true) refEdits[1].text?.toString() else null,
-                refEdit3 = if (refEdits[2].text?.isNotEmpty() == true) refEdits[2].text?.toString() else null,
-                refEdit4 = if (refEdits[3].text?.isNotEmpty() == true) refEdits[3].text?.toString() else null,
-                refEdit5 = if (refEdits[4].text?.isNotEmpty() == true) refEdits[4].text?.toString() else null,
-                appText1 = if (appTexts[0].text?.isNotEmpty() == true) appTexts[0].text?.toString() else null,
-                appText2 = if (appTexts[1].text?.isNotEmpty() == true) appTexts[1].text?.toString() else null,
-                appText3 = if (appTexts[2].text?.isNotEmpty() == true) appTexts[2].text?.toString() else null,
-                appText4 = if (appTexts[3].text?.isNotEmpty() == true) appTexts[3].text?.toString() else null,
-                appText5 = if (appTexts[4].text?.isNotEmpty() == true) appTexts[4].text?.toString() else null,
-                appEdit1 = if (appEdits[0].text?.isNotEmpty() == true) appEdits[0].text?.toString() else null,
-                appEdit2 = if (appEdits[1].text?.isNotEmpty() == true) appEdits[1].text?.toString() else null,
-                appEdit3 = if (appEdits[2].text?.isNotEmpty() == true) appEdits[2].text?.toString() else null,
-                appEdit4 = if (appEdits[3].text?.isNotEmpty() == true) appEdits[3].text?.toString() else null,
-                appEdit5 = if (appEdits[4].text?.isNotEmpty() == true) appEdits[4].text?.toString() else null,
-            )
-            val dao = QtDatabase.getDatabase(context).qtDao()
-            GlobalScope.launch {
-                dao.insert(qt)
+            model?.id?.id?.let { contentId ->
+                val qt = Qt(
+                    contentId = contentId,
+                    date = model?.scheduledDate,
+                    title = model?.title,
+                    refText1 = if (refTexts[0].text?.isNotEmpty() == true) refTexts[0].text?.toString() else null,
+                    refText2 = if (refTexts[1].text?.isNotEmpty() == true) refTexts[1].text?.toString() else null,
+                    refText3 = if (refTexts[2].text?.isNotEmpty() == true) refTexts[2].text?.toString() else null,
+                    refText4 = if (refTexts[3].text?.isNotEmpty() == true) refTexts[3].text?.toString() else null,
+                    refText5 = if (refTexts[4].text?.isNotEmpty() == true) refTexts[4].text?.toString() else null,
+                    refEdit1 = if (refEdits[0].text?.isNotEmpty() == true) refEdits[0].text?.toString() else null,
+                    refEdit2 = if (refEdits[1].text?.isNotEmpty() == true) refEdits[1].text?.toString() else null,
+                    refEdit3 = if (refEdits[2].text?.isNotEmpty() == true) refEdits[2].text?.toString() else null,
+                    refEdit4 = if (refEdits[3].text?.isNotEmpty() == true) refEdits[3].text?.toString() else null,
+                    refEdit5 = if (refEdits[4].text?.isNotEmpty() == true) refEdits[4].text?.toString() else null,
+                    appText1 = if (appTexts[0].text?.isNotEmpty() == true) appTexts[0].text?.toString() else null,
+                    appText2 = if (appTexts[1].text?.isNotEmpty() == true) appTexts[1].text?.toString() else null,
+                    appText3 = if (appTexts[2].text?.isNotEmpty() == true) appTexts[2].text?.toString() else null,
+                    appText4 = if (appTexts[3].text?.isNotEmpty() == true) appTexts[3].text?.toString() else null,
+                    appText5 = if (appTexts[4].text?.isNotEmpty() == true) appTexts[4].text?.toString() else null,
+                    appEdit1 = if (appEdits[0].text?.isNotEmpty() == true) appEdits[0].text?.toString() else null,
+                    appEdit2 = if (appEdits[1].text?.isNotEmpty() == true) appEdits[1].text?.toString() else null,
+                    appEdit3 = if (appEdits[2].text?.isNotEmpty() == true) appEdits[2].text?.toString() else null,
+                    appEdit4 = if (appEdits[3].text?.isNotEmpty() == true) appEdits[3].text?.toString() else null,
+                    appEdit5 = if (appEdits[4].text?.isNotEmpty() == true) appEdits[4].text?.toString() else null,
+                )
+                val dao = QtDatabase.getDatabase(context).qtDao()
+                GlobalScope.launch {
+                    val id = dao.insert(qt)
+                if (id > 0) {
+                    view.post {
+                        Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                }
             }
+        }
+
+        binding.qtShareBtn.setOnClickListener {
+
         }
     }
 }

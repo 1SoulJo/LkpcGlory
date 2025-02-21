@@ -13,10 +13,10 @@ interface QtDao {
     @Query("SELECT * FROM qt_table")
     fun getAll(): LiveData<List<Qt>>
 
-    @Query("SELECT * FROM qt_table WHERE id==(:id) LIMIT 1")
-    fun loadById(id: Int): LiveData<Qt>
+//    @Query("SELECT * FROM qt_table WHERE id==(:id) LIMIT 1")
+//    fun loadById(id: Int): LiveData<Qt>
 
-    @Query("SELECT * FROM qt_table WHERE content_id==(:contentId) LIMIT 1")
+    @Query("SELECT * FROM qt_table WHERE contentId==(:contentId) LIMIT 1")
     fun loadByContentId(contentId: String): LiveData<Qt>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,6 +25,6 @@ interface QtDao {
     @Delete
     suspend fun delete(qt: Qt)
 
-    @Query("DELETE from qt_table where id in (:idList)")
+    @Query("DELETE from qt_table where contentId in (:idList)")
     suspend fun deleteAll(idList: List<Int>)
 }
