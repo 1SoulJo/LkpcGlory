@@ -49,6 +49,8 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
         val appEdits = listOf(binding.qtAppEdit1, binding.qtAppEdit2, binding.qtAppEdit3, binding.qtAppEdit4, binding.qtAppEdit5)
         val viewModel: MeditationViewModelV2 by activityViewModels()
         viewModel.currentModel.observe(viewLifecycleOwner) { it ->
+            binding.qtMainView.scrollTo(0, 0)
+
             model = it
             refEdits.forEach {
                 it.text.clear()
@@ -156,36 +158,40 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
         }
 
         binding.qtShareBtn.setOnClickListener {
-            fun genQtShareData(): String {
-                val builder = StringBuilder()
-                binding.qtSection1.text?.let {
-                    builder.append(it).append("\n")
-                }
-                refEdits.forEachIndexed { i, edit ->
-                    val editText = edit.text
-                    if (editText.isNullOrEmpty()) {
-                        return@forEachIndexed
-                    }
-                    val refText = refTexts[i]
-                    builder.append(refText.text).append("\n")
-                    builder.append(" - ").append(editText).append("\n")
-                }
-                builder.append("\n")
-                binding.qtSection2.text?.let {
-                    builder.append(it).append("\n")
-                }
-                appEdits.forEachIndexed { i, edit ->
-                    val editText = edit.text
-                    if (editText.isNullOrEmpty()) {
-                        return@forEachIndexed
-                    }
-                    val appText = appTexts[i]
-                    builder.append(appText.text).append("\n")
-                    builder.append(" - ").append(editText).append("\n")
-                }
-                return builder.toString()
+            // gen share data
+            val builder = StringBuilder()
+            binding.qtSection1.text?.let {
+                builder.append(it).append("\n")
             }
-            val textData = genQtShareData()
+            refEdits.forEachIndexed { i, edit ->
+                val refText = refTexts[i].text
+                if (refText.isNotEmpty()) {
+                    builder.append(refText).append("\n")
+                }
+
+                val editText = edit.text
+                if (editText.isNullOrEmpty()) {
+                    return@forEachIndexed
+                }
+                builder.append(" - ").append(editText).append("\n")
+            }
+            builder.append("\n")
+            binding.qtSection2.text?.let {
+                builder.append(it).append("\n")
+            }
+            appEdits.forEachIndexed { i, edit ->
+                val appText = appTexts[i].text
+                if (appText.isNotEmpty()) {
+                    builder.append(appText).append("\n")
+                }
+
+                val editText = edit.text
+                if (editText.isNullOrEmpty()) {
+                    return@forEachIndexed
+                }
+                builder.append(" - ").append(editText).append("\n")
+            }
+            val textData = builder.toString()
 
             val ctx = context ?: return@setOnClickListener
             val alertDialog: AlertDialog = AlertDialog.Builder(ctx, R.style.AlertDialogTheme).create()

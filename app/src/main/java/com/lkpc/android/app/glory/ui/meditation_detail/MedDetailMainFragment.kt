@@ -1,34 +1,22 @@
 package com.lkpc.android.app.glory.ui.meditation_detail
 
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.youtube.player.YouTubeInitializationResult
-import com.google.android.youtube.player.YouTubePlayer
-import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
-import com.lkpc.android.app.glory.BuildConfig
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.databinding.FragmentMedDetailMainBinding
-import com.lkpc.android.app.glory.databinding.FragmentMeditationDetailBinding
 import com.lkpc.android.app.glory.entity.MeditationV2
 import com.lkpc.android.app.glory.ui.meditation.MeditationViewModelV2
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerListener
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MedDetailMainFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MedDetailMainFragment : Fragment(R.layout.fragment_med_detail_main) {
     private var _binding: FragmentMedDetailMainBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
@@ -71,13 +59,13 @@ class MedDetailMainFragment : Fragment(R.layout.fragment_med_detail_main) {
                 }
                 when (position) {
                     0 -> {
-                        binding.bibleMain.text = dataModel.bible1
+                        binding.bibleMain.text = dataModel.bible1?.replace("\n", "\n\n")
                     }
                     1 -> {
-                        binding.bibleMain.text = dataModel.bible2
+                        binding.bibleMain.text = dataModel.bible2?.replace("\n", "\n\n")
                     }
                     else -> {
-                        binding.bibleMain.text = dataModel.bible3
+                        binding.bibleMain.text = dataModel.bible3?.replace("\n", "\n\n")
                     }
                 }
             }
@@ -89,11 +77,13 @@ class MedDetailMainFragment : Fragment(R.layout.fragment_med_detail_main) {
         viewModel.currentModel.observe(viewLifecycleOwner) {
             dataModel = it ?: return@observe
 
+            binding.medDetailMain.scrollTo(0, 0)
+
             val selectedBible = binding.bibleSpinner.selectedItemPosition
             binding.bibleMain.text = when (selectedBible) {
-                0 -> dataModel.bible1
-                1 -> dataModel.bible2
-                else -> dataModel.bible3
+                0 -> dataModel.bible1?.replace("\n", "\n\n")
+                1 -> dataModel.bible2?.replace("\n", "\n\n")
+                else -> dataModel.bible3?.replace("\n", "\n\n")
             }
 
             binding.videoLoadingView.visibility = View.GONE
