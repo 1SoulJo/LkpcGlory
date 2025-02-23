@@ -23,6 +23,7 @@
             android:paddingStart="16dp"
             android:paddingEnd="16dp">
             <TextView
+                android:id="@+id/qt_section_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="묵상 | Reflection"
@@ -149,6 +150,7 @@
 
             <!-- Application -->
             <TextView
+                android:id="@+id/qt_section_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="적용 | Application"

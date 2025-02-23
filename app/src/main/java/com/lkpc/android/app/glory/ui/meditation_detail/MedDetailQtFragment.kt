@@ -1,24 +1,26 @@
 package com.lkpc.android.app.glory.ui.meditation_detail
 
+import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.TypedValue
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.data.QtDatabase
-import com.lkpc.android.app.glory.databinding.FragmentMedDetailPrayerBinding
 import com.lkpc.android.app.glory.databinding.FragmentMedDetailQtBinding
 import com.lkpc.android.app.glory.entity.MeditationV2
 import com.lkpc.android.app.glory.entity.Qt
 import com.lkpc.android.app.glory.ui.meditation.MeditationViewModelV2
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+
 
 /**
  * A simple [Fragment] subclass.
@@ -144,17 +146,64 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
                 val dao = QtDatabase.getDatabase(context).qtDao()
                 GlobalScope.launch {
                     val id = dao.insert(qt)
-                if (id > 0) {
-                    view.post {
-                        Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                    if (id > 0) {
+                        view.post {
+                            Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
                 }
             }
         }
 
         binding.qtShareBtn.setOnClickListener {
+            fun genQtShareData(): String {
+                val builder = StringBuilder()
+                binding.qtSection1.text?.let {
+                    builder.append(it).append("\n")
+                }
+                refEdits.forEachIndexed { i, edit ->
+                    val editText = edit.text
+                    if (editText.isNullOrEmpty()) {
+                        return@forEachIndexed
+                    }
+                    val refText = refTexts[i]
+                    builder.append(refText.text).append("\n")
+                    builder.append(" - ").append(editText).append("\n")
+                }
+                builder.append("\n")
+                binding.qtSection2.text?.let {
+                    builder.append(it).append("\n")
+                }
+                appEdits.forEachIndexed { i, edit ->
+                    val editText = edit.text
+                    if (editText.isNullOrEmpty()) {
+                        return@forEachIndexed
+                    }
+                    val appText = appTexts[i]
+                    builder.append(appText.text).append("\n")
+                    builder.append(" - ").append(editText).append("\n")
+                }
+                return builder.toString()
+            }
+            val textData = genQtShareData()
 
+            val ctx = context ?: return@setOnClickListener
+            val alertDialog: AlertDialog = AlertDialog.Builder(ctx, R.style.AlertDialogTheme).create()
+            alertDialog.setTitle("묵상 공유")
+            alertDialog.setMessage(textData)
+            alertDialog.setButton(
+                DialogInterface.BUTTON_POSITIVE, "공유"
+            ) { dialog, _ ->
+                val i = Intent(Intent.ACTION_SEND)
+                i.setType("text/plain")
+                i.putExtra(Intent.EXTRA_TEXT, textData)
+                startActivity(i)
+                dialog.dismiss()
+            }
+            alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "취소") {
+                dialog, _ -> dialog.dismiss()
+            }
+            alertDialog.show()
         }
     }
 }
