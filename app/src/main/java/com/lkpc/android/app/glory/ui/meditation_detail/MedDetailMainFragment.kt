@@ -66,6 +66,9 @@ class MedDetailMainFragment : Fragment(R.layout.fragment_med_detail_main) {
                 position: Int,
                 id: Long
             ) {
+                if (!this@MedDetailMainFragment::dataModel.isInitialized) {
+                    return
+                }
                 when (position) {
                     0 -> {
                         binding.bibleMain.text = dataModel.bible1
@@ -85,7 +88,13 @@ class MedDetailMainFragment : Fragment(R.layout.fragment_med_detail_main) {
         val viewModel: MeditationViewModelV2 by activityViewModels()
         viewModel.currentModel.observe(viewLifecycleOwner) {
             dataModel = it ?: return@observe
-            binding.bibleMain.text = dataModel.bible1
+
+            val selectedBible = binding.bibleSpinner.selectedItemPosition
+            binding.bibleMain.text = when (selectedBible) {
+                0 -> dataModel.bible1
+                1 -> dataModel.bible2
+                else -> dataModel.bible3
+            }
 
             binding.videoLoadingView.visibility = View.GONE
             binding.youtubeVideoLayout.visibility = View.GONE

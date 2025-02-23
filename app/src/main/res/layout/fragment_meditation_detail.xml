@@ -76,13 +76,12 @@
                 android:id="@+id/med_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2025-02-15"
+                android:text=""
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/date_right"
-                tools:layout_editor_absoluteX="48dp" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/date_right"

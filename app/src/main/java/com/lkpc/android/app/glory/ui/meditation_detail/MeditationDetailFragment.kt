@@ -67,16 +67,20 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
 
         val viewModel: MeditationViewModelV2 by activityViewModels()
         viewModel.currentModel.observe(viewLifecycleOwner) {
+            if (!this@MeditationDetailFragment::dataList.isInitialized) {
+                return@observe
+            }
+            currentIndex = dataList.indexOf(it)
             updateContent(it)
         }
         viewModel.getData().observe(activity as LifecycleOwner) { data ->
-            viewModel.setCurrentModel(data[currentIndex])
             dataList = data
             dataList.forEach {
                 it.scheduledDate?.let { date ->
                     viewModel.dataMap[date] = it
                 }
             }
+            viewModel.setCurrentModel(data[currentIndex])
         }
 
         binding.todayBtn.setOnClickListener {
