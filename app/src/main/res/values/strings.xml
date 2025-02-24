@@ -111,4 +111,7 @@
     <string name="meditation_main">meditation main</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="qt_section_1">묵상 | Reflection</string>
+    <string name="qt_section_sunday">목장 나눔 질문</string>
+    <string name="qt_section_2">적용 | Application</string>
 </resources>

@@ -27,7 +27,7 @@
                 android:id="@+id/qt_section_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="묵상 | Reflection"
+                android:text="@string/qt_section_1"
                 android:textStyle="bold"
                 android:textColor="#009593"
                 android:layout_marginBottom="8dp"
@@ -159,11 +159,12 @@
                 android:id="@+id/qt_section_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="적용 | Application"
+                android:text="@string/qt_section_2"
                 android:textColor="#009593"
                 android:textStyle="bold"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 android:textSize="20sp" />
 
             <TextView

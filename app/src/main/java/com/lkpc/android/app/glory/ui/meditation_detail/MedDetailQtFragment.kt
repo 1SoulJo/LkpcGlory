@@ -20,13 +20,9 @@ import com.lkpc.android.app.glory.entity.Qt
 import com.lkpc.android.app.glory.ui.meditation.MeditationViewModelV2
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MedDetailQtFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
     private var _binding: FragmentMedDetailQtBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
@@ -48,6 +44,8 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
         val appTexts = listOf(binding.qtAppText1, binding.qtAppText2, binding.qtAppText3, binding.qtAppText4, binding.qtAppText5)
         val appEdits = listOf(binding.qtAppEdit1, binding.qtAppEdit2, binding.qtAppEdit3, binding.qtAppEdit4, binding.qtAppEdit5)
         val viewModel: MeditationViewModelV2 by activityViewModels()
+
+        // date change
         viewModel.currentModel.observe(viewLifecycleOwner) { it ->
             binding.qtMainView.scrollTo(0, 0)
 
@@ -58,13 +56,36 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
             appEdits.forEach {
                 it.text.clear()
             }
+
+            // check if it's Sunday and put questions in 1 section if it's Sunday
+            var isSunday = false
+            val date = SimpleDateFormat("yyyy-MM-dd", Locale.CANADA).parse(it?.scheduledDate ?: "1999-01-01")
+            date?.let {
+                val cal = Calendar.getInstance(Locale.CANADA)
+                cal.time = it
+                val dow = cal.get(Calendar.DAY_OF_WEEK)
+
+                if (dow == Calendar.SUNDAY) {
+                    isSunday = true
+                    binding.qtSection1.text = resources.getString(R.string.qt_section_sunday)
+                    binding.qtSection2.visibility = View.GONE
+                } else {
+                    binding.qtSection1.text = resources.getString(R.string.qt_section_1)
+                    binding.qtSection2.text = resources.getString(R.string.qt_section_2)
+                    binding.qtSection2.visibility = View.VISIBLE
+                }
+            }
+
+
             it?.reflectionList?.forEachIndexed { i, s ->
                 refTexts[i].text = "${i + 1}. $s"
                 refTexts[i].visibility = View.VISIBLE
                 refEdits[i].visibility = View.VISIBLE
             }
             it?.applyList?.forEachIndexed { i, s ->
-                appTexts[i].text = "${i + 1}. $s"
+                val offset = if (isSunday) it.reflectionList?.size ?: 0 else 0
+                val index = i + offset
+                appTexts[i].text = "${index + 1}. $s"
                 appTexts[i].visibility = View.VISIBLE
                 appEdits[i].visibility = View.VISIBLE
             }
@@ -112,11 +133,13 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
             }
         }
 
+        // text size change
         viewModel.currentTextSize.observe(viewLifecycleOwner) { size ->
             refTexts.forEach { it.setTextSize(TypedValue.COMPLEX_UNIT_SP, size) }
             appTexts.forEach { it.setTextSize(TypedValue.COMPLEX_UNIT_SP, size) }
         }
 
+        // save btn handler
         binding.qtSaveBtn.setOnClickListener {
             val context = context ?: return@setOnClickListener
             model?.id?.id?.let { contentId ->
@@ -157,6 +180,7 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
             }
         }
 
+        // share btn handler
         binding.qtShareBtn.setOnClickListener {
             // gen share data
             val builder = StringBuilder()
