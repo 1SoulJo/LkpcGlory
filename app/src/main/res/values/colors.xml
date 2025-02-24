@@ -16,4 +16,7 @@
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+    <color name="tab_indicator">#155853</color>
+    <color name="yt_video">#D92B96</color>
+    <color name="med_main_title">#56B7B6</color>
 </resources>
