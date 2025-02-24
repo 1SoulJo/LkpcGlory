@@ -50,10 +50,15 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
             binding.qtMainView.scrollTo(0, 0)
 
             model = it
+
+            refTexts.forEach { it.visibility = View.GONE }
+            appTexts.forEach { it.visibility = View.GONE }
             refEdits.forEach {
+                it.visibility = View.GONE
                 it.text.clear()
             }
             appEdits.forEach {
+                it.visibility = View.GONE
                 it.text.clear()
             }
 
@@ -76,18 +81,21 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
                 }
             }
 
-
+            var questionId = 1
             it?.reflectionList?.forEachIndexed { i, s ->
-                refTexts[i].text = "${i + 1}. $s"
+                refTexts[i].text = "$questionId. $s"
                 refTexts[i].visibility = View.VISIBLE
                 refEdits[i].visibility = View.VISIBLE
+                questionId += 1
+            }
+            if (!isSunday) {
+                questionId = 1
             }
             it?.applyList?.forEachIndexed { i, s ->
-                val offset = if (isSunday) it.reflectionList?.size ?: 0 else 0
-                val index = i + offset
-                appTexts[i].text = "${index + 1}. $s"
+                appTexts[i].text = "$questionId. $s"
                 appTexts[i].visibility = View.VISIBLE
                 appEdits[i].visibility = View.VISIBLE
+                questionId += 1
             }
 
             context?.let { ctx ->
