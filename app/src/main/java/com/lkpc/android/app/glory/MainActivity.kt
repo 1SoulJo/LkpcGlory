@@ -168,7 +168,6 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.nav_host_fragment, homeFragment, TAG_HOME).hide(homeFragment)
                 .add(R.id.nav_host_fragment, columnFragment, TAG_COLUMN).hide(columnFragment)
                 .add(R.id.nav_host_fragment, sermonFragment, TAG_SERMON).hide(sermonFragment)
-//                .add(R.id.nav_host_fragment, meditationFragment , TAG_MEDITATION).hide(meditationFragment)
                 .add(R.id.nav_host_fragment, meditationDetailFragment , TAG_MEDITATION_DETAIL).hide(meditationDetailFragment)
                 .add(R.id.nav_host_fragment, fellowNewsFragment , TAG_FELLOW_NEWS).hide(fellowNewsFragment)
                 .show(activeFragment!!)
@@ -177,7 +176,7 @@ class MainActivity : AppCompatActivity() {
         setupNavigationView()
         setupNotification()
 
-        binding.appBarMain.toolBar.toolbarTitle.setTextColor(Color.parseColor("#666566"))
+        binding.appBarMain.toolBar.toolbarTitle.setTextColor(resources.getColor(R.color.newToolbarTitle))
 
         binding.appBarMain.toolBar.toolbarFontBtn.setOnClickListener {
             val viewModel: MeditationViewModelV2 by viewModels()

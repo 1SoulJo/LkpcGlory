@@ -49,10 +49,13 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
 
         tabLayout.addOnTabSelectedListener(object: OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+//                tab.view.setBackgroundColor(resources.getColor(R.color.selected_tab_bg))
                 viewPager.currentItem = tab.position
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) = Unit
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+//                tab.view.setBackgroundColor(resources.getColor(R.color.tab_bg))
+            }
 
             override fun onTabReselected(tab: TabLayout.Tab) = Unit
         })

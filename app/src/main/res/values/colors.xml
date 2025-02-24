@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#2186C9</color>
-    <color name="newToolbarBG">#F8F8F8</color>
+    <color name="newToolbarBG">#F6F8F8</color>
     <color name="newToolbarTitle">#666566</color>
     <color name="colorPrimaryDark">#2186C9</color>
     <color name="colorAccent">#03DAC5</color>
@@ -19,4 +19,16 @@
     <color name="tab_indicator">#155853</color>
     <color name="yt_video">#D92B96</color>
     <color name="med_main_title">#56B7B6</color>
+
+    <!-- med main   -->
+    <color name="selected_tab_bg">#A8DADA</color>
+    <color name="selected_tab_text">#015853</color>
+    <color name="tab_text">#8ABBBA</color>
+    <color name="tab_bg">#DDF1F0</color>
+    <color name="med_header_bg">#FFF</color>
+    <color name="med_main_body">#000</color>
+    <color name="med_qt_body">#292724</color>
+    <color name="med_qt_edittext">#292724</color>
+    <color name="med_date_color">#015853</color>
+    <color name="cal_icon_tint">#555555</color>
 </resources>

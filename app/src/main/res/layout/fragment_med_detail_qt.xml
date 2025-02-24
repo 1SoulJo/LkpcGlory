@@ -37,7 +37,7 @@
                 android:id="@+id/qt_ref_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone"
@@ -53,6 +53,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="12dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -61,7 +62,7 @@
                 android:id="@+id/qt_ref_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -76,6 +77,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="8dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -84,7 +86,7 @@
                 android:id="@+id/qt_ref_text3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -99,6 +101,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -107,7 +110,7 @@
                 android:id="@+id/qt_ref_text4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -122,6 +125,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -130,7 +134,7 @@
                 android:id="@+id/qt_ref_text5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -145,6 +149,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -165,7 +170,7 @@
                 android:id="@+id/qt_app_text1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -180,6 +185,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -188,7 +194,7 @@
                 android:id="@+id/qt_app_text2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -203,6 +209,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -211,7 +218,7 @@
                 android:id="@+id/qt_app_text3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -226,6 +233,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -234,7 +242,7 @@
                 android:id="@+id/qt_app_text4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -249,6 +257,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -257,7 +266,7 @@
                 android:id="@+id/qt_app_text5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#292724"
+                android:textColor="@color/med_qt_body"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"
                 android:visibility="gone" />
@@ -272,6 +281,7 @@
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
+                android:textColor="@color/med_qt_edittext"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />

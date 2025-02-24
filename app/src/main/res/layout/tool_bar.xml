@@ -34,7 +34,7 @@
             android:layout_height="48dp"
             android:scaleType="fitCenter"
             android:background="@android:color/transparent"
-            android:tint="#666566"
+            android:tint="@color/newToolbarTitle"
             android:padding="8dp"
             android:src="@drawable/text_size_icon"
             android:layout_gravity="end"

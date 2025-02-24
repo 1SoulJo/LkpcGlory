@@ -16,7 +16,7 @@
         android:clipToPadding="false"
         android:text="Prayer"
         android:lineSpacingExtra="8sp"
-        android:textColor="#000000"
+        android:textColor="@color/med_main_body"
         android:textSize="18sp" />
 
 </ScrollView>

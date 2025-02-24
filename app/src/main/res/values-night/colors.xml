@@ -6,4 +6,13 @@
     <color name="listRowBackground">#333333</color>
     <color name="menuText">#FFFFFF</color>
     <color name="home_borderline">#555555</color>
+    <color name="newToolbarBG">#000</color>
+    <color name="newToolbarTitle">#DEDEDE</color>
+
+    <!-- med main   -->
+    <color name="med_header_bg">#000</color>
+    <color name="med_main_body">#FFF</color>
+    <color name="cal_icon_tint">#E5F4F4</color>
+    <color name="med_date_color">#E5F4F4</color>
+    <color name="med_qt_body">#FFF</color>
 </resources>
