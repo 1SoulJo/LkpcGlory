@@ -63,17 +63,17 @@
                 android:id="@+id/grid1_icon"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/home_live"
+                android:src="@drawable/home_youtube"
                 app:layout_constraintBottom_toTopOf="@id/grid1_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tint="#B9C69C3B" />
+                app:tint="#1A5E77" />
 
             <TextView
                 android:id="@+id/grid1_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/lpc_live"
+                android:text="@string/lpc_youtube_channels_kr"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="?android:attr/textColorPrimary"
@@ -85,7 +85,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/live_worship"
+                android:text="@string/lpc_youtube_channels"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -109,18 +109,18 @@
                 android:id="@+id/grid2_icon"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:src="@drawable/home_youtube"
+                android:src="@drawable/ic_meditation"
                 app:layout_constraintBottom_toTopOf="@id/grid2_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tint="#C13434" />
+                app:tint="#B9C69C3B" />
 
             <TextView
                 android:id="@+id/grid2_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/lpc_youtube_channels_kr"
+                android:text="@string/title_meditation"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="?android:attr/textColorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -131,7 +131,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/lpc_youtube_channels"
+                android:text="@string/meditation"
                 android:gravity="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -159,7 +159,7 @@
                 app:layout_constraintBottom_toTopOf="@id/grid3_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tint="#1A5E77" />
+                app:tint="#C13434" />
 
             <TextView
                 android:id="@+id/grid3_text"

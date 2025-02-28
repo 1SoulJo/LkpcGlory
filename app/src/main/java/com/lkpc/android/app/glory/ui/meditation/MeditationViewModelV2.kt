@@ -7,12 +7,16 @@ import com.lkpc.android.app.glory.entity.BaseContent
 import com.lkpc.android.app.glory.entity.MeditationV2
 import com.lkpc.android.app.glory.repository.MeditationRepository
 import com.lkpc.android.app.glory.repository.MeditationRepositoryV2
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MeditationViewModelV2 : ViewModel() {
 
     val currentModel = MutableLiveData<MeditationV2?>()
     val currentTextSize = MutableLiveData<Float>()
     val dataMap: MutableMap<String, MeditationV2> = mutableMapOf()
+
+    val format = SimpleDateFormat("yyyy-MM-dd", Locale.CANADA)
 
     private var currentTextSizeIndex: Int = 0
 
@@ -36,6 +40,12 @@ class MeditationViewModelV2 : ViewModel() {
 
     fun setCurrentModel(model: MeditationV2) {
         currentModel.value = model
+    }
+
+    fun setCurrentDate(date: Date) {
+//        val cal = Calendar.getInstance()
+//        cal.time = date
+        currentModel.value = dataMap[format.format(date)]
     }
 
     fun onTextSizeButtonClicked() {

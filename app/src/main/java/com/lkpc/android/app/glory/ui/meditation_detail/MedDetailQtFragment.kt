@@ -207,9 +207,11 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
                 }
                 builder.append(" - ").append(editText).append("\n")
             }
-            builder.append("\n")
-            binding.qtSection2.text?.let {
-                builder.append(it).append("\n")
+            if (binding.qtSection2.visibility == View.VISIBLE) {
+                builder.append("\n")
+                binding.qtSection2.text?.let {
+                    builder.append(it).append("\n")
+                }
             }
             appEdits.forEachIndexed { i, edit ->
                 val appText = appTexts[i].text

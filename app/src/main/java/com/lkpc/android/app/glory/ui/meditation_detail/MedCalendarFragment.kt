@@ -54,6 +54,9 @@ class MedCalendarFragment : DialogFragment(R.layout.fragment_med_calendar) {
                 } ?: Toast.makeText(context, "묵상이 존재하지 않습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.calendarView.setOnMonthChangedListener { widget, date ->
+
+        }
         context?.let { ctx ->
             val qtDao = QtDatabase.getDatabase(ctx).qtDao()
             qtDao.getAll().observe(viewLifecycleOwner) { qts ->

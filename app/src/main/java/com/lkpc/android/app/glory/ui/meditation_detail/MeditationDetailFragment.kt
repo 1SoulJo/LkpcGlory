@@ -16,13 +16,16 @@ import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.databinding.FragmentMeditationDetailBinding
 import com.lkpc.android.app.glory.entity.MeditationV2
 import com.lkpc.android.app.glory.ui.meditation.MeditationViewModelV2
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
     private lateinit var tabLayout: TabLayout
     private lateinit var viewPager: ViewPager2
     private lateinit var adapter: MedViewPagerAdapter
     private lateinit var dataList: List<MeditationV2>
-    private var currentIndex: Int = 0
+    private var currentDate: Date = Calendar.getInstance().time
+    private val format = SimpleDateFormat("yyyy-MM-dd", Locale.CANADA)
 
     private var _binding: FragmentMeditationDetailBinding? = null
     // This property is only valid between onCreateView and onDestroyView.
@@ -49,13 +52,10 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
 
         tabLayout.addOnTabSelectedListener(object: OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-//                tab.view.setBackgroundColor(resources.getColor(R.color.selected_tab_bg))
                 viewPager.currentItem = tab.position
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-//                tab.view.setBackgroundColor(resources.getColor(R.color.tab_bg))
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab) = Unit
 
             override fun onTabReselected(tab: TabLayout.Tab) = Unit
         })
@@ -73,7 +73,11 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
             if (!this@MeditationDetailFragment::dataList.isInitialized) {
                 return@observe
             }
-            currentIndex = dataList.indexOf(it)
+            it?.scheduledDate?.let { dateString ->
+                format.parse(dateString)?.let { date ->
+                    currentDate = date
+                }
+            }
             updateContent(it)
         }
         viewModel.getData().observe(activity as LifecycleOwner) { data ->
@@ -83,29 +87,26 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
                     viewModel.dataMap[date] = it
                 }
             }
-            viewModel.setCurrentModel(data[currentIndex])
+
+            currentDate = Calendar.getInstance().time
+            viewModel.setCurrentDate(currentDate)
         }
 
         binding.todayBtn.setOnClickListener {
-            if (currentIndex == 0) {
-                return@setOnClickListener
-            }
-            currentIndex = 0
-            viewModel.setCurrentModel(dataList[currentIndex])
+            currentDate = Calendar.getInstance().time
+            viewModel.setCurrentDate(currentDate)
         }
         binding.dateLeft.setOnClickListener {
-            if (dataList.size <= currentIndex + 1) {
-                return@setOnClickListener
-            }
-            currentIndex += 1
-            viewModel.setCurrentModel(dataList[currentIndex])
+            val cal = Calendar.getInstance()
+            cal.time = currentDate
+            cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1)
+            viewModel.setCurrentDate(cal.time)
         }
         binding.dateRight.setOnClickListener {
-            if (currentIndex <= 0) {
-                return@setOnClickListener
-            }
-            currentIndex -= 1
-            viewModel.setCurrentModel(dataList[currentIndex])
+            val cal = Calendar.getInstance()
+            cal.time = currentDate
+            cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 1)
+            viewModel.setCurrentDate(cal.time)
         }
         binding.calBtn.setOnClickListener {
             MedCalendarFragment().show(childFragmentManager, "MedCal")

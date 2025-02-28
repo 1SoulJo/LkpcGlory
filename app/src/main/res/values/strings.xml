@@ -5,7 +5,7 @@
     <string name="title_home">홈</string>
     <string name="title_column">목회칼럼</string>
     <string name="title_sermon">주일 설교</string>
-    <string name="title_meditation">날마다빛으로</string>
+    <string name="title_meditation">날마다 빛으로</string>
     <string name="title_notifications">큰빛소식</string>
     <string name="title_notifications_en">News</string>
     <string name="lkpc_church">LKPC Church</string>
@@ -67,6 +67,7 @@
     <string name="navigation">오시는 길</string>
     <string name="lpc_live">큰빛 LIVE</string>
     <string name="live_worship">Live Worship</string>
+    <string name="meditation">Into the light</string>
     <string name="lpc_youtube_channels_kr">큰빛 유튜브 채널</string>
     <string name="lpc_youtube_channels">Youtube Channels</string>
     <string name="newcomer_reg_kr">새교우 가등록</string>
@@ -114,4 +115,5 @@
     <string name="qt_section_1">묵상 | Reflection</string>
     <string name="qt_section_sunday">목장 나눔 질문</string>
     <string name="qt_section_2">적용 | Application</string>
+    <string name="video_loading">영상 업로드 준비중</string>
 </resources>

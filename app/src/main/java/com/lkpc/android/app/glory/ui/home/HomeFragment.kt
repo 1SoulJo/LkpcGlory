@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.lkpc.android.app.glory.BuildConfig
+import com.lkpc.android.app.glory.MainActivity
 import com.lkpc.android.app.glory.R
 import com.lkpc.android.app.glory.constants.WebUrls
 import com.lkpc.android.app.glory.databinding.FragmentHomeBinding
@@ -54,11 +56,16 @@ class HomeFragment : Fragment() {
 
         // setup grids
         binding.gridCenterLayout1.setOnClickListener {
-            // LPC Live
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(WebUrls.LKPC_LIVE_VIDEO)))
+            startActivity(Intent(requireContext(), YoutubeChannelActivity::class.java))
         }
         binding.gridCenterLayout2.setOnClickListener {
-            startActivity(Intent(requireContext(), YoutubeChannelActivity::class.java))
+            // Meditation
+            try {
+                findNavController().navigate(R.id.navigation_meditation)
+                (activity as? MainActivity)?.setFragment(R.id.navigation_meditation)
+            } catch (e: IllegalArgumentException) {
+                e.printStackTrace()
+            }
         }
         binding.gridCenterLayout3.setOnClickListener {
             // Bulletin

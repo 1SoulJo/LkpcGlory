@@ -50,6 +50,7 @@
                 android:minHeight="100dp"
                 android:autofillHints="Text"
                 android:background="@drawable/qt_edit_box_bg"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:backgroundTint="#E5F4F4"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="12dp"
@@ -78,6 +79,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="8dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -102,6 +104,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -126,6 +129,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -150,6 +154,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -187,6 +192,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -211,6 +217,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -235,6 +242,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -259,6 +267,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -283,6 +292,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="4dp"
                 android:textColor="@color/med_qt_edittext"
+                android:textCursorDrawable="@drawable/qt_cursor_bg"
                 android:gravity="top"
                 android:padding="8dp"
                 android:visibility="gone" />
@@ -304,7 +314,7 @@
                 android:layout_weight="1"
                 android:layout_marginEnd="12dp"
                 android:backgroundTint="#009593"
-                android:stateListAnimator="@null"
+                android:stateListAnimator="@drawable/qt_cursor_bg"
                 android:text="저장"/>
             <Button
                 android:id="@+id/qt_share_btn"
@@ -314,7 +324,7 @@
                 android:layout_marginStart="12dp"
                 android:backgroundTint="#E5F4F4"
                 android:textColor="#009593"
-                android:stateListAnimator="@null"
+                android:stateListAnimator="@drawable/qt_cursor_bg"
                 android:text="공유"/>
         </LinearLayout>
     </LinearLayout>

@@ -298,7 +298,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setFragment(itemId: Int): Boolean {
+    fun setFragment(itemId: Int): Boolean {
         selectedFragment = itemId
         supportFragmentManager.beginTransaction().hide(meditationDetailFragment).commitNow()
         resetToolbar()

@@ -15,4 +15,8 @@
     <color name="cal_icon_tint">#E5F4F4</color>
     <color name="med_date_color">#E5F4F4</color>
     <color name="med_qt_body">#FFF</color>
+
+    <!-- qt  -->
+    <color name="share_dialog_positive_btn">#FFF</color>
+    <color name="share_dialog_negative_btn">#F00</color>
 </resources>

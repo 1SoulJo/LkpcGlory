@@ -48,19 +48,6 @@ class HomeSlidePagerAdapter(f: Fragment) : FragmentStateAdapter(f) {
         adContents = ads.filter { it.forMobile == "t" }.toMutableList()
         for (ad in adContents) {
             val f = AdItemFragment(ad)
-            val client = BasicRequestClient()
-            client.getImage(WebUrls.IMG_ASSET.format(ad.linkImg!!),
-                cb = object : Callback<ResponseBody> {
-                    override fun onResponse(call: Call<ResponseBody>, res: Response<ResponseBody>) {
-                        if (res.isSuccessful && res.body() != null) {
-                            f.img = BitmapFactory.decodeStream(res.body()!!.byteStream())
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                        t.printStackTrace()
-                    }
-                })
             fragments.add(f)
             ids.add(f.hashCode().toLong())
         }
@@ -85,6 +72,20 @@ class AdItemFragment(val content: AdContent) : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val client = BasicRequestClient()
+        client.getImage(WebUrls.IMG_ASSET.format(content.linkImg!!),
+        cb = object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, res: Response<ResponseBody>) {
+                if (res.isSuccessful && res.body() != null) {
+                    img = BitmapFactory.decodeStream(res.body()!!.byteStream())
+                    binding.homeAdItemImg.setImageBitmap(img)
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                t.printStackTrace()
+            }
+        })
         if (img != null) {
             binding.homeAdItemImg.setImageBitmap(img)
 

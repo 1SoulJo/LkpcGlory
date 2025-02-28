@@ -31,4 +31,8 @@
     <color name="med_qt_edittext">#292724</color>
     <color name="med_date_color">#015853</color>
     <color name="cal_icon_tint">#555555</color>
+
+    <!-- qt  -->
+    <color name="share_dialog_positive_btn">#00F</color>
+    <color name="share_dialog_negative_btn">#F00</color>
 </resources>

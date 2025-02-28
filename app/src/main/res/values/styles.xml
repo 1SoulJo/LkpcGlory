@@ -60,11 +60,11 @@
     </style>
 
     <style name="NegativeButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">#f00</item>
+        <item name="android:textColor">@color/share_dialog_negative_btn</item>
     </style>
 
     <style name="PositiveButtonStyle" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
-        <item name="android:textColor">#00f</item>
+        <item name="android:textColor">@color/share_dialog_positive_btn</item>
     </style>
 
     <!-- med tab layer   -->
