@@ -12,7 +12,7 @@
         android:layout_marginTop="24dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="128dp"
+        android:paddingBottom="160dp"
         android:clipToPadding="false"
         android:text="Prayer"
         android:lineSpacingExtra="8sp"

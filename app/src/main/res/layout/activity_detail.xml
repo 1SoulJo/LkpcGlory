@@ -54,6 +54,19 @@
                 android:theme="?attr/subtitleTextStyle" />
 
             <LinearLayout
+                android:id="@+id/detail_youtube_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="vertical" >
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/youtube_player_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:autoPlay="false" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/detail_youtube_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -67,14 +80,6 @@
                     android:layout_marginTop="8dp"
                     android:minHeight="100dp" />
             </LinearLayout>
-
-            <androidx.media3.ui.PlayerControlView
-                android:id="@+id/detail_audio"
-                android:layout_height="80dp"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="16dp"
-                android:visibility="gone"
-                app:controller_layout_id="@layout/custom_audio_control"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/buttons_area"
@@ -90,7 +95,7 @@
                     android:background="@drawable/bg_sermon_video"
                     android:paddingStart="30dp"
                     android:paddingEnd="30dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toTopOf="@id/warning_area"
                     app:layout_constraintEnd_toStartOf="@+id/btn_audio"
                     app:layout_constraintStart_toStartOf="parent"

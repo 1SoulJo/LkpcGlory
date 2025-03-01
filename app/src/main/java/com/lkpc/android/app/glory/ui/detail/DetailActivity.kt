@@ -38,6 +38,7 @@ import com.lkpc.android.app.glory.databinding.ActivityDetailBinding
 import com.lkpc.android.app.glory.entity.BaseContent
 import com.lkpc.android.app.glory.ui.note.NoteDetailActivity
 import com.lkpc.android.app.glory.ui.note.NoteEditActivity
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerCallback
 import org.jsoup.Jsoup
 import org.jsoup.safety.Safelist
 import retrofit2.Call
@@ -111,12 +112,12 @@ class DetailActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        val detailAudio = binding.detailAudio
-        if (detailAudio.player != null) {
-//            playerNotificationManager.setPlayer(null)
-            detailAudio.player?.release()
-            detailAudio.player = null
-        }
+//        val detailAudio = binding.detailAudio
+//        if (detailAudio.player != null) {
+////            playerNotificationManager.setPlayer(null)
+//            detailAudio.player?.release()
+//            detailAudio.player = null
+//        }
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -215,12 +216,12 @@ class DetailActivity : AppCompatActivity() {
         binding.contentDate.text = newFormat.format(dateFormat.parse(content.dateCreated!!)!!)
 
         // setup youtube video is available
-        if (content.videoLink != null) {
-            setupYoutubeView(content.videoLink!!)
+        content.videoLink?.let{
+            setupYoutubeView(it)
         }
 
         // setup audio if available
-        if (content.audioLink != null) {
+        if (content.audioLink?.isNotEmpty() == true) {
 //            playerNotificationManager = PlayerNotificationManager(
 //                this, CHANNEL_ID, SERMON_AUDIO_ID,
 //                DescriptionAdapter(getString(R.string.title_sermon), content.title!!))
@@ -246,10 +247,10 @@ class DetailActivity : AppCompatActivity() {
                 .build()
             audioPlayer.setAudioAttributes(audioAttributes, true)
 
-            binding.detailAudio.showTimeoutMs = -1
-            binding.detailAudio.player = audioPlayer
+//            binding.detailAudio.showTimeoutMs = -1
+//            binding.detailAudio.player = audioPlayer
 
-            binding.btnAudio.visibility = View.VISIBLE
+//            binding.btnAudio.visibility = View.VISIBLE
         }
 
         // remove video and audio file
@@ -263,23 +264,31 @@ class DetailActivity : AppCompatActivity() {
             // setup video/audio buttons
             binding.buttonsArea.visibility = View.VISIBLE
             binding.btnVideo.setOnClickListener {
-                binding.detailYoutubeLayout.visibility = View.VISIBLE
-                (binding.detailAudio as PlayerControlView).hide()
-                if (binding.detailAudio.player != null) {
-                    (binding.detailAudio.player as ExoPlayer).pause()
-                }
-            }
-            binding.btnAudio.setOnClickListener {
+                binding.detailYoutubeView.visibility = View.VISIBLE
                 binding.detailYoutubeLayout.visibility = View.GONE
-                (binding.detailAudio as PlayerControlView).show()
+//                (binding.detailAudio as PlayerControlView).hide()
+//                if (binding.detailAudio.player != null) {
+//                    (binding.detailAudio.player as ExoPlayer).pause()
+//                }
             }
-        } else {
-            binding.contentBody.text =
-                HtmlCompat.fromHtml(newDoc, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+//            binding.btnAudio.setOnClickListener {
+//                binding.detailYoutubeLayout.visibility = View.GONE
+//                (binding.detailAudio as PlayerControlView).show()
+//            }
         }
+
+        binding.contentBody.text =
+            HtmlCompat.fromHtml(newDoc, HtmlCompat.FROM_HTML_MODE_COMPACT)
     }
 
     private fun setupYoutubeView(id: String) {
+        val playerView = binding.youtubePlayerView
+        playerView.getYouTubePlayerWhenReady(object: YouTubePlayerCallback {
+            override fun onYouTubePlayer(youTubePlayer: com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer) {
+                youTubePlayer.cueVideo(id, 0F)
+            }
+        })
+
         val fragment = supportFragmentManager.findFragmentById(R.id.detail_youtube_fragment)
         val yf = fragment as YouTubePlayerSupportFragmentX
         yf.initialize(

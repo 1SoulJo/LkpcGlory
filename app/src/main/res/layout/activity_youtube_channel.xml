@@ -23,9 +23,10 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/lkpc_main"
+            app:tint="#7000"
+            android:tintMode="src_over"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="#7000" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/channel1_name"
@@ -59,6 +60,7 @@
             android:src="@drawable/youtube_ya"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:tintMode="src_over"
             app:tint="#7000" />
 
         <TextView
@@ -93,6 +95,7 @@
             android:src="@drawable/youtube_ec"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:tintMode="src_over"
             app:tint="#7000" />
 
         <TextView
@@ -127,6 +130,7 @@
             android:src="@drawable/youtube_nhf"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:tintMode="src_over"
             app:tint="#7000" />
 
         <TextView
@@ -161,6 +165,7 @@
             android:src="@drawable/youtube_dt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:tintMode="src_over"
             app:tint="#7000" />
 
         <TextView
