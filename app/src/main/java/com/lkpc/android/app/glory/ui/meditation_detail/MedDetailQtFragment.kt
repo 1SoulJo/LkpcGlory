@@ -83,6 +83,9 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
 
             var questionId = 1
             it?.reflectionList?.forEachIndexed { i, s ->
+                if (s.isEmpty()) {
+                    return@forEachIndexed
+                }
                 refTexts[i].text = "$questionId. $s"
                 refTexts[i].visibility = View.VISIBLE
                 refEdits[i].visibility = View.VISIBLE
@@ -92,6 +95,9 @@ class MedDetailQtFragment : Fragment(R.layout.fragment_med_detail_qt) {
                 questionId = 1
             }
             it?.applyList?.forEachIndexed { i, s ->
+                if (s.isEmpty()) {
+                    return@forEachIndexed
+                }
                 appTexts[i].text = "$questionId. $s"
                 appTexts[i].visibility = View.VISIBLE
                 appEdits[i].visibility = View.VISIBLE

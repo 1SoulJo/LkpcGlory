@@ -20,33 +20,16 @@ object MeditationRepositoryV2: Callback<List<MeditationV2>> {
         date.set(Calendar.DATE, 31)
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.CANADA)
         if (data.value == null || data.value?.isEmpty() == true) {
-            apiClient.loadMeditationsV2(0, format.format(date.time), object: Callback<List<MeditationV2>> {
-                override fun onResponse(
-                    call: Call<List<MeditationV2>>,
-                    response: Response<List<MeditationV2>>
-                ) {
-                    if (response.isSuccessful) {
-                        if (data.value == null) {
-                            data.value = response.body()
-                        } else {
-                            val list = (data.value as List<MeditationV2>).toMutableList()
-                            if (list.isNotEmpty()) list.removeLastOrNull()
+            apiClient.loadMeditationsV2(0, format.format(date.time), this@MeditationRepositoryV2)
 
-                            list += response.body() as List<MeditationV2>
-                            data.value = list
-                        }
+            val currentMonth = date.get(Calendar.MONTH)
+            date.set(Calendar.MONTH, currentMonth + 1)
+            date.set(Calendar.DATE, 31)
+            apiClient.loadMeditationsV2(0, format.format(date.time), this@MeditationRepositoryV2)
 
-                        val currentMonth = date.get(Calendar.MONTH)
-                        date.set(Calendar.MONTH, currentMonth + 1)
-                        date.set(Calendar.DATE, 31)
-                        apiClient.loadMeditationsV2(0, format.format(date.time), this@MeditationRepositoryV2)
-                    }
-                }
-
-                override fun onFailure(call: Call<List<MeditationV2>>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-            })
+            date.set(Calendar.MONTH, currentMonth - 1)
+            date.set(Calendar.DATE, 31)
+            apiClient.loadMeditationsV2(0, format.format(date.time), this@MeditationRepositoryV2)
         }
     }
 

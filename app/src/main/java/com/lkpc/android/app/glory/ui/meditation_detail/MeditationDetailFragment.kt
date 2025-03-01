@@ -100,13 +100,27 @@ class MeditationDetailFragment : Fragment(R.layout.fragment_meditation_detail) {
             val cal = Calendar.getInstance()
             cal.time = currentDate
             cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1)
-            viewModel.setCurrentDate(cal.time)
+            val currentDate = cal.time
+            if (viewModel.hasData(currentDate)) {
+                viewModel.setCurrentDate(cal.time)
+            } else {
+                val day = cal.get(Calendar.DATE)
+                cal.set(Calendar.DATE, day - 1)
+                viewModel.setCurrentDate(cal.time)
+            }
         }
         binding.dateRight.setOnClickListener {
             val cal = Calendar.getInstance()
             cal.time = currentDate
             cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 1)
-            viewModel.setCurrentDate(cal.time)
+            val currentDate = cal.time
+            if (viewModel.hasData(currentDate)) {
+                viewModel.setCurrentDate(cal.time)
+            } else {
+                val day = cal.get(Calendar.DATE)
+                cal.set(Calendar.DATE, day + 1)
+                viewModel.setCurrentDate(cal.time)
+            }
         }
         binding.calBtn.setOnClickListener {
             MedCalendarFragment().show(childFragmentManager, "MedCal")

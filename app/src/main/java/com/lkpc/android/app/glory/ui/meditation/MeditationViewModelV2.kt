@@ -43,9 +43,11 @@ class MeditationViewModelV2 : ViewModel() {
     }
 
     fun setCurrentDate(date: Date) {
-//        val cal = Calendar.getInstance()
-//        cal.time = date
         currentModel.value = dataMap[format.format(date)]
+    }
+
+    fun hasData(date: Date): Boolean {
+        return dataMap.contains(format.format(date))
     }
 
     fun onTextSizeButtonClicked() {
